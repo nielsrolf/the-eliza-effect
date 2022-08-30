@@ -9,9 +9,9 @@ const MAX_VOLUME = 104;
 
 
 const outputs = {
-  "Luzia": 104,
+  "Luzia": 100,
   "Marin": 106,
-  "Kriemhild": 108,
+  "Kriemhild": 106,
   "Alle": 106,
   "Room": 106
 }
@@ -54,14 +54,14 @@ const AudioScreen = props => {
         if (selectedOutput) {
           cc(0, selectedOutput, 9);
           cc(0, selectedOutput + 1, 9);
+          setSelectedOutput(channel);
           cc(MAX_VOLUME, channel, 9);
           cc(MAX_VOLUME, channel + 1, 9);
-          setSelectedOutput(channel);
         };
         // console.log(channel)
+        setSelectedOutput(channel);
         cc(MAX_VOLUME, channel, 9);
         cc(MAX_VOLUME, channel + 1, 9);
-        setSelectedOutput(channel);
       }
       
       if(files[currentFile].src){
@@ -156,7 +156,7 @@ const AudioScreen = props => {
             display: isAudio ? 'block' : 'none'
           }}
           onEnded={handleNext}
-          src={`http://localhost:5000/assets/${currentMedia.src}`}
+          src={`/assets/${currentMedia.src}`}
           id='track01'
           >  
         </audio>
@@ -183,7 +183,6 @@ const AudioScreen = props => {
               <textarea name="src" value={file.text} style={{width: "100%"}} onChange={(event) => updateText(idx, event.target.value)}/>
               <Button onClick={saveStory}>Update</Button>
               <Button onClick={() => {insertEmptyMediaAfter(idx)}}>Insert</Button>
-              <Button onClick={() => {playVideo(file.src)}}>Play</Button>
             
 
             </FileListItem>

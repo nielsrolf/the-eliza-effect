@@ -6,20 +6,24 @@ import click
 def typing_animate(text, seconds_per_word, wait_at_the_end):
     while "  " in text:
         text = text.replace("  ", " ")
-    duration = len(text.split(" ")) * seconds_per_word
-    N = len(text)
-    durations = np.random.uniform(1, 3, size=(N,))
-    durations = durations / durations.sum() * duration 
-    durations[-1] += wait_at_the_end
-    videos = []
-    for i in range(len(text)):
-        txt_clip = mp.TextClip(text[:i+1], fontsize=50, color='white', size=(1280, 720), method='caption', align='North')
-        txt_clip = txt_clip.set_pos('bottom').set_duration(durations[i]) #.set_pos('center')
-        videos.append(txt_clip)
-    return mp.concatenate_videoclips(videos)
+    try:
+        duration = len(text.split(" ")) * seconds_per_word
+        N = len(text)
+        durations = np.random.uniform(1, 3, size=(N,))
+        durations = durations / durations.sum() * duration 
+        durations[-1] += wait_at_the_end
+        videos = []
+        for i in range(len(text)):
+            txt_clip = mp.TextClip(text[:i+1], fontsize=50, color='white', size=(1280, 720), method='caption', align='North')
+            txt_clip = txt_clip.set_pos('bottom').set_duration(durations[i]) #.set_pos('center')
+            videos.append(txt_clip)
+        return mp.concatenate_videoclips(videos)
+    except:
+        breakpoint()
 
 
 def long_text_to_video(text, seconds_per_word, wait_at_the_end):
+    print("Generating video for: ", text)
     for punctuation in [". ", "! ", "? ", ": ", "; "]:
         text = text.replace(punctuation, punctuation + "\n")
     text = text.split("\n")
@@ -27,9 +31,10 @@ def long_text_to_video(text, seconds_per_word, wait_at_the_end):
     for sentence in text:
         words = sentence.split(" ")
         while len(words) > 14:
-            slide, words = words[:14], words[14:]
+            slide, words = words[:13], words[13:]
             slides.append(" ".join(slide))
-        slides.append(" ".join(words))
+        slide = " ".join(words)
+        slides.append(slide)
     
     videos = [typing_animate(slide, seconds_per_word, wait_at_the_end) for slide in slides]
     return mp.concatenate_videoclips(videos)

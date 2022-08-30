@@ -28,7 +28,7 @@ cp .env.example .env
 
 and run the server:
 ```
-python gen_theater/backend.py &
+python3 backend/backend.py
 cd frontend && npm start
 ```
 
