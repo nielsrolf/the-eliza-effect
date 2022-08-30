@@ -9,9 +9,9 @@ const MAX_VOLUME = 104;
 
 
 const outputs = {
-  "Luzia": 100,
+  "Luzia": 104,
   "Marin": 106,
-  "Kriemhild": 106,
+  "Kriemhild": 108,
   "Alle": 106,
   "Room": 106
 }
@@ -54,14 +54,14 @@ const AudioScreen = props => {
         if (selectedOutput) {
           cc(0, selectedOutput, 9);
           cc(0, selectedOutput + 1, 9);
-          setSelectedOutput(channel);
           cc(MAX_VOLUME, channel, 9);
           cc(MAX_VOLUME, channel + 1, 9);
+          setSelectedOutput(channel);
         };
         // console.log(channel)
-        setSelectedOutput(channel);
         cc(MAX_VOLUME, channel, 9);
         cc(MAX_VOLUME, channel + 1, 9);
+        setSelectedOutput(channel);
       }
       
       if(files[currentFile].src){
