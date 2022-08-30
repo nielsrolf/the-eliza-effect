@@ -156,7 +156,7 @@ const AudioScreen = props => {
             display: isAudio ? 'block' : 'none'
           }}
           onEnded={handleNext}
-          src={`/assets/${currentMedia.src}`}
+          src={`http://localhost:5000/assets/${currentMedia.src}`}
           id='track01'
           >  
         </audio>
