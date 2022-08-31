@@ -12,8 +12,8 @@ const outputs = {
   "Luzia": 104,
   "Marin": 106,
   "Kriemhild": 108,
-  "Alle": 106,
-  "Room": 106
+  "Alle": "all",
+  "All": "all"
 }
 
 
@@ -50,25 +50,32 @@ const AudioScreen = props => {
       
       const AudioElement = document.getElementById('track01');
       
-      function handleOutputChange(channel){
-        console.log("output changed to: ", channel);
-        if (!channel) return;
-        
-        if (selectedOutput) {
-          cc(0, selectedOutput, 9);
-          cc(0, selectedOutput + 1, 9);
+      function handleOutputChange(actor){
+        console.log("output changed to: ", actor);
+        if (!actor) return;
+
+        if(actor==="all") {
+          for(let i = 104; i <= 109; i++){
+            cc(MAX_VOLUME, i, 9);
+          }
+          // setSelectedOutput(channel);
+          return
+        }
+        // mute all channels
+        for(let i = 104; i <= 109; i++){
+          cc(0, i, 9);
+        }
+        for(let singleActor of actor.split("+")){
+          // set selected channel to max volume
+          let channel = outputs[singleActor];
           cc(MAX_VOLUME, channel, 9);
           cc(MAX_VOLUME, channel + 1, 9);
-          setSelectedOutput(channel);
-        };
-        // console.log(channel)
-        cc(MAX_VOLUME, channel, 9);
-        cc(MAX_VOLUME, channel + 1, 9);
-        setSelectedOutput(channel);
+          // setSelectedOutput(channel); 
+        }
       }
       
       if(files[currentFile].src){
-        handleOutputChange(outputs[files[currentFile].actor])
+        handleOutputChange(files[currentFile].actor)
         document.getElementById(files[currentFile]?.src).scrollIntoView({behavior: "smooth", block: "center"});
         if (!AutoPlay) return;
         if(files[currentFile].media==='audio'){
@@ -78,7 +85,6 @@ const AudioScreen = props => {
         }
       }
     },[currentFile, AutoPlay])
-    
     
   
     function handleNext(){
@@ -193,7 +199,7 @@ const AudioScreen = props => {
               <div style={{display: isLoading ? 'none' : 'block'}} >
                 <Button onClick={saveStory}>Update</Button>
                 <Button onClick={() => {insertEmptyMediaAfter(idx)}}>Insert</Button>
-                <Button onClick={() => {playVideo(file.src)}}>Play</Button>
+                <Button onClick={() => {playVideo(file.src)}} style={{display: file.media==="video" ? "inline" : "none"}}>Play</Button>
                 Autplay: 
                 <input
                   type="checkbox"

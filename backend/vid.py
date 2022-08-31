@@ -6,20 +6,17 @@ import click
 def typing_animate(text, seconds_per_word, wait_at_the_end):
     while "  " in text:
         text = text.replace("  ", " ")
-    try:
-        duration = len(text.split(" ")) * seconds_per_word
-        N = len(text)
-        durations = np.random.uniform(1, 3, size=(N,))
-        durations = durations / durations.sum() * duration 
-        durations[-1] += wait_at_the_end
-        videos = []
-        for i in range(len(text)):
-            txt_clip = mp.TextClip(text[:i+1], fontsize=50, color='white', size=(1280, 720), method='caption', align='North')
-            txt_clip = txt_clip.set_pos('bottom').set_duration(durations[i]) #.set_pos('center')
-            videos.append(txt_clip)
-        return mp.concatenate_videoclips(videos)
-    except:
-        breakpoint()
+    duration = len(text.split(" ")) * seconds_per_word
+    N = len(text)
+    durations = np.random.uniform(1, 3, size=(N,))
+    durations = durations / durations.sum() * duration 
+    durations[-1] += wait_at_the_end
+    videos = []
+    for i in range(len(text)):
+        txt_clip = mp.TextClip(text[:i+1], fontsize=20, color='white', size=(500, 720), method='caption', align='North', font="Avenir")
+        txt_clip = txt_clip.set_pos('bottom').set_duration(durations[i]) #.set_pos('center')
+        videos.append(txt_clip)
+    return mp.concatenate_videoclips(videos)
 
 
 def long_text_to_video(text, seconds_per_word, wait_at_the_end):
@@ -56,3 +53,4 @@ def main(output_path, text, seconds_per_word=0.5, wait_at_the_end=2):
 
 if __name__ == "__main__":
     main()
+

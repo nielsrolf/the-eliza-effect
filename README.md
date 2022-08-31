@@ -34,3 +34,12 @@ cd frontend && npm start
 
 # Setting up the secon screen
 [here](https://apple.stackexchange.com/questions/161701/how-can-i-force-an-application-to-be-launched-to-the-2nd-monitor#:~:text=Make%20any%20application%20start%20on%20the%20other%20monitor%3A&text=Go%20to%20System%20Preferences%20%2D%3E%20Displays,iterm2%20and%20chrome%20browser%20does.)
+
+
+TotalMix -> Options -> Enable Midi control
+TotalMix -> Options -> Settings -> ... -> Midi input
+```
+brew install node
+brew install ghostscript
+brew install ffmpeg
+```
