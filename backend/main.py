@@ -72,10 +72,7 @@ class Part:
             actor, raw = raw.split(" (", 1)
             media, text = raw.split("): ", 1)
             text = text.strip()
-        else:
-            actor, text = raw.split(":", 1)
-            media = "audio"
-            text = text.strip()
+        
         return Part(raw, actor, media, text, False, voices.get(actor, "Anna"))
     
     def __str__(self):

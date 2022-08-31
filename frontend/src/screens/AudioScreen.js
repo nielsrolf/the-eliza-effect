@@ -27,8 +27,11 @@ const AudioScreen = props => {
     const [ selectedOutput, setSelectedOutput ] = useState({ name: 'default' });
   
     const [ currentFile_, setCurrentFile ] = useState(0);
-    const [ AutoPlay, setAutoPlay ] = useState(0)
+    const [ AutoPlay, setAutoPlay ] = useState(false)
     const currentFile = currentFile_ > files.length - 1 ? 0 : currentFile_;
+    const [isLoading, setIsLoading] = useState(false);
+
+    console.log("autoPlay", AutoPlay)
 
     const playVideo = async (src) => {
       const requestOptions = {
@@ -86,6 +89,9 @@ const AudioScreen = props => {
       if(nextFile >= files.length){
         nextFile = files.length - 1;
       }
+      if(files[nextFile].media==='stop') {
+        setAutoPlay(false);
+      }
       setCurrentFile(nextFile);
     }
     function handlePrevious(){
@@ -126,6 +132,7 @@ const AudioScreen = props => {
     const saveStory = async () => {
   
       try {
+        setIsLoading(true);
         const requestOptions = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -142,6 +149,8 @@ const AudioScreen = props => {
         setStory(result);
       } catch (err) {
         console.log(err)
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -170,7 +179,6 @@ const AudioScreen = props => {
         </div>
         <p children={`Track source: ${currentMedia.src}`}/>
         <p children={`Track index: ${currentFile}`}/>
-        <Switch label='Auto-Play' callback={() => setAutoPlay(state => !state)} value={AutoPlay}/>
       </div>
 
       <FileListContainer>
@@ -181,10 +189,18 @@ const AudioScreen = props => {
               <input type="text" name="actor" value={file.actor} onChange={(event) => updateActor(idx, event.target.value)}/>:
               <input type="text" name="media" value={file.media} onChange={(event) => updateMedia(idx, event.target.value)}/>
               <textarea name="src" value={file.text} style={{width: "100%"}} onChange={(event) => updateText(idx, event.target.value)}/>
-              <Button onClick={saveStory}>Update</Button>
-              <Button onClick={() => {insertEmptyMediaAfter(idx)}}>Insert</Button>
-              <Button onClick={() => {playVideo(file.src)}}>Play</Button>
-            
+
+              <div style={{display: isLoading ? 'none' : 'block'}} >
+                <Button onClick={saveStory}>Update</Button>
+                <Button onClick={() => {insertEmptyMediaAfter(idx)}}>Insert</Button>
+                <Button onClick={() => {playVideo(file.src)}}>Play</Button>
+                Autplay: 
+                <input
+                  type="checkbox"
+                  checked={AutoPlay}
+                  onChange={() => setAutoPlay(!AutoPlay)}
+                />
+              </div>
 
             </FileListItem>
             
