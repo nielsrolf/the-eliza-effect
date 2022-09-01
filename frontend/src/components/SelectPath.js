@@ -64,7 +64,7 @@ function SelectPath(props) {
     <form>
       {
         available.map((file) =>
-            <Button value={file} onClick={setSelectedPath} key={file}>{file}</Button>
+            <Button value={file} onClick={setSelectedPath} key={file}>{file.split("data/")[1].split(".")[0]}</Button>
         )
     }
     </form>
