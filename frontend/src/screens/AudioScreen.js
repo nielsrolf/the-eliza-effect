@@ -99,10 +99,11 @@ const AudioScreen = props => {
         }
       }
     },[currentFile, AutoPlay])
-    
-  
-    function handleNext(){
-      let nextFile = currentFile + 1;
+
+
+    function handleNextOffset(offset){
+      console.log("habndlenext", currentFile)
+      let nextFile = currentFile + offset;
       while(nextFile < files.length && files[nextFile].media==='none'){
         nextFile = nextFile + 1;
       }
@@ -114,7 +115,17 @@ const AudioScreen = props => {
       }
       setCurrentFile(nextFile);
       document.getElementById('track01').playbackRate = playbackRate / 100;
+      if(files[nextFile].media==="break") {
+        let seconds = parseInt(files[nextFile].text);
+        setTimeout(() => handleNextOffset(offset + 1), seconds * 1000)
+      }
     }
+
+    function handleNext() {
+      handleNextOffset(1);
+    }
+
+
     function handlePrevious(){
       let previous = currentFile - 1;
       while(previous >= 0 && files[previous].media==='none'){
