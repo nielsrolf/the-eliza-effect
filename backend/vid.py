@@ -2,8 +2,13 @@ from moviepy import editor as mp
 import numpy as np
 import click
 
+slide_duration = 5
+fontsize = 20
+size=(500, 720)
+font = "Avenir"
 
-def typing_animate(text, seconds_per_word, wait_at_the_end):
+
+def typing_animate(text, seconds_per_word, wait_at_the_end, prefix=""):
     while "  " in text:
         text = text.replace("  ", " ")
     duration = len(text.split(" ")) * seconds_per_word
@@ -13,13 +18,14 @@ def typing_animate(text, seconds_per_word, wait_at_the_end):
     durations[-1] += wait_at_the_end
     videos = []
     for i in range(len(text)):
-        txt_clip = mp.TextClip(text[:i+1], fontsize=20, color='white', size=(500, 720), method='caption', align='North', font="Avenir")
+        txt_clip = mp.TextClip(prefix + text[:i+1], fontsize=fontsize, color='white', size=size, method='caption', align='North', font=font)
         txt_clip = txt_clip.set_pos('bottom').set_duration(durations[i]) #.set_pos('center')
         videos.append(txt_clip)
     return mp.concatenate_videoclips(videos)
 
 
-def long_text_to_video(text, seconds_per_word, wait_at_the_end):
+
+def input_video(text, seconds_per_word, wait_at_the_end):
     print("Generating video for: ", text)
     for punctuation in [". ", "! ", "? ", ": ", "; "]:
         text = text.replace(punctuation, punctuation + "\n")
@@ -27,13 +33,40 @@ def long_text_to_video(text, seconds_per_word, wait_at_the_end):
     slides = []
     for sentence in text:
         words = sentence.split(" ")
-        while len(words) > 14:
-            slide, words = words[:13], words[13:]
+        while len(words) > 20:
+            slide, words = words[:19], words[19:]
             slides.append(" ".join(slide))
         slide = " ".join(words)
         slides.append(slide)
     
-    videos = [typing_animate(slide, seconds_per_word, wait_at_the_end) for slide in slides]
+    videos = []
+    prefix = "INPUT: "
+    for slide in slides:
+        videos.append(typing_animate(slide, seconds_per_word, wait_at_the_end, prefix))
+        prefix = ""
+    return mp.concatenate_videoclips(videos)
+
+
+def slideshow(text):
+    print("Generating video for: ", text)
+    for punctuation in [". ", "! ", "? ", ": ", "; "]:
+        text = text.replace(punctuation, punctuation + "\n")
+    text = text.split("\n")
+    slides = []
+    for sentence in text:
+        words = sentence.split(" ")
+        while len(words) > 20:
+            slide, words = words[:19], words[19:]
+            slides.append(" ".join(slide))
+        slide = " ".join(words)
+        slides.append(slide)
+    
+    videos = []
+    for slide in slides:
+        print("slide: ", slide)
+        txt_clip = mp.TextClip(slide, fontsize=fontsize, color='white', size=size, method='caption', align='North', font=font)
+        txt_clip = txt_clip.set_pos('bottom').set_duration(slide_duration) #.set_pos('center')
+        videos.append(txt_clip)
     return mp.concatenate_videoclips(videos)
 
 
@@ -48,7 +81,7 @@ def main(output_path, text, seconds_per_word=0.5, wait_at_the_end=2):
     Arguments:
         story: path to the ready text file
     """
-    long_text_to_video(text, seconds_per_word, wait_at_the_end).write_videofile(output_path, fps=24)
+    slideshow(text).write_videofile(output_path, fps=24)
 
 
 if __name__ == "__main__":

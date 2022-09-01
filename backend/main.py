@@ -9,7 +9,7 @@ from tqdm import tqdm
 import time
 import json
 import numpy as np
-from vid import long_text_to_video
+from vid import input_video, slideshow
 from dotenv import load_dotenv
 load_dotenv()
 import secrets_file as secrets
@@ -295,7 +295,7 @@ from scipy.io import wavfile
 
 def silence(seconds: int, filename) -> None:
     """Create a x seconds long audio of silence"""
-    audio = np.zeros(int(seconds * 44100))
+    audio = np.zeros(int(seconds) * 44100)
     wavfile.write(filename, 44100, audio)
     
 
@@ -314,9 +314,12 @@ def text_to_media(parts, target=None):
         next_actor = parts[i + 1].actor if i < len(parts) - 1 else part.actor
         if part.actor == "BREAK":
             print(part)
+            filename = f"{target}/{part.actor}/{i + 1}.wav"
+            os.makedirs(f"{target}/{part.actor}", exist_ok=True)
             silence(part.text, filename)
             part.src = filename
             part.output = "audio"
+            continue
         if next_actor == part.actor:
             hint = part.actor
         else:
@@ -331,14 +334,17 @@ def text_to_media(parts, target=None):
             system(f"say -o {filename} --data-format=LEF32@22050 '{text}'")
 
         if part.media == "video":
-            print(part.actor)
-            text = part.text.replace("'", "")
+            text = part.text.replace("'", "\'")
             if target is not None:
                 filename = f"{target}/{part.actor}/{i + 1}.mp4"
                 part.src = filename
                 part.output = "screen"
-                os.makedirs(f"{target}/{part.actor}", exist_ok=True)                    
-                long_text_to_video(text, 0.5, 3).write_videofile(filename, fps=24)
+                os.makedirs(f"{target}/{part.actor}", exist_ok=True)    
+            
+                if part.actor.lower() == "input":
+                    input_video(text, 0.5, 3).write_videofile(filename, fps=24)
+                else:
+                    slideshow(text).write_videofile(filename, fps=24)
 
     with open(f"{target}/medias.json", "w") as f:
         json.dump([i.__dict__ for i in parts], f)
