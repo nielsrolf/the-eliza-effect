@@ -79,11 +79,11 @@ async def generate(template: Story) -> Story:
     """
     target = ".".join(template.path.split(".")[:-1]) + "/generated"
     os.makedirs(target, exist_ok=True)
-    if template.language != "en":
-        story = en_to_de(story)
-    story_en = fill_template_gpt3([Part(**i) for i in template.medias])
-    story_de = translate_parts(story_en)
-    story_de = text_to_media(story_de, target=target)
+    #if template.language != "en":
+    #    story = en_to_de(story)
+    #story_en = fill_template_gpt3([Part(**i) for i in template.medias])
+    #story_de = translate_parts(story_en)
+    story_de = text_to_media([Part(**i) for i in template.medias], target=target)
     story_de = Story(path=template.path, medias=[i.__dict__ for i in story_de], language="de")
     return story_de
 

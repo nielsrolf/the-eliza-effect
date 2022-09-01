@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Button } from "@mui/material";
+import { Button, Slider } from "@mui/material";
 import { useEffect, useState } from "react";
 import Switch from "../components/Switch";
 import { useMIDIOutput } from "../hooks/useMidiOutput";
@@ -12,8 +12,14 @@ const outputs = {
   "Luzia": 104,
   "Marin": 106,
   "Kriemhild": 108,
+  "LUZIA": 104,
+  "MARIN": 106,
+  "KRIEMHILD": 108,
   "Alle": "all",
-  "All": "all"
+  "ALL": "all",
+  "ALLE": "all",
+  "All": "all",
+  "all": "all",
 }
 
 
@@ -30,8 +36,15 @@ const AudioScreen = props => {
     const [ AutoPlay, setAutoPlay ] = useState(false)
     const currentFile = currentFile_ > files.length - 1 ? 0 : currentFile_;
     const [isLoading, setIsLoading] = useState(false);
+    const [playbackRate, setPlaybackRate] = useState(100);
 
     console.log("autoPlay", AutoPlay)
+
+
+    const changeAudioSpeed = (event) => {
+      document.getElementById('track01').playbackRate = event.target.value / 100;
+      setPlaybackRate(event.target.value);
+    }
 
     const playVideo = async (src) => {
       const requestOptions = {
@@ -49,12 +62,13 @@ const AudioScreen = props => {
     useEffect(()=>{
       
       const AudioElement = document.getElementById('track01');
-      
+
+      AudioElement.playbackRate = playbackRate / 100;
       function handleOutputChange(actor){
-        console.log("output changed to: ", actor);
+        console.log("output changed to: ", outputs[actor]);
         if (!actor) return;
 
-        if(actor==="all") {
+        if(outputs[actor]==="all") {
           for(let i = 104; i <= 109; i++){
             cc(MAX_VOLUME, i, 9);
           }
@@ -99,6 +113,7 @@ const AudioScreen = props => {
         setAutoPlay(false);
       }
       setCurrentFile(nextFile);
+      document.getElementById('track01').playbackRate = playbackRate / 100;
     }
     function handlePrevious(){
       let previous = currentFile - 1;
@@ -165,16 +180,20 @@ const AudioScreen = props => {
     const isVideo = currentMedia.media === 'video';
   
     return <Container>
-      <div  style={{display: currentMedia.src ? 'block' : 'none'}} >
+      <div  style={{position: 'absolut', bottom: 0}} >
         <audio controls style={{
-            width: '100%',
-            display: isAudio ? 'block' : 'none'
+            width: '420px', height: '15px',
+            display: isAudio ? 'inline' : 'none'
           }}
           onEnded={handleNext}
           src={`http://localhost:5000/assets/${currentMedia.src}`}
           id='track01'
+          playbackRate={playbackRate / 100}
           >  
         </audio>
+        Speed: <Slider aria-label="Speed" value={playbackRate } onChange={changeAudioSpeed} min={50}  max={150}  style={{
+            width: '420px', height: '15px'
+          }} size="small"  valueLabelDisplay="auto"/>
         <Button children='Play video' size='small' onClick={(event) => playVideo(currentMedia.src)}
           style={{
             display: isVideo ? 'block' : 'none'
@@ -183,8 +202,6 @@ const AudioScreen = props => {
           <Button children='<' size='small' onClick={handlePrevious} disabled={!currentFile} />
           <Button children='>' onClick={handleNext} />
         </div>
-        <p children={`Track source: ${currentMedia.src}`}/>
-        <p children={`Track index: ${currentFile}`}/>
       </div>
 
       <FileListContainer>
@@ -205,6 +222,7 @@ const AudioScreen = props => {
                   type="checkbox"
                   checked={AutoPlay}
                   onChange={() => setAutoPlay(!AutoPlay)}
+                  playbackRate="0.5"
                 />
               </div>
 
