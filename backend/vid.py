@@ -2,7 +2,6 @@ from moviepy import editor as mp
 import numpy as np
 import click
 
-slide_duration = 5
 fontsize = 20
 size=(500, 720)
 font = "Avenir"
@@ -25,7 +24,7 @@ def typing_animate(text, seconds_per_word, wait_at_the_end, prefix=""):
 
 
 
-def input_video(text, seconds_per_word, wait_at_the_end):
+def input_video(text, seconds_per_word, wait_at_the_end, prefix="INPUT: "):
     print("Generating video for: ", text)
     for punctuation in [". ", "! ", "? ", ": ", "; "]:
         text = text.replace(punctuation, punctuation + "\n")
@@ -39,19 +38,20 @@ def input_video(text, seconds_per_word, wait_at_the_end):
         slide = " ".join(words)
         slides.append(slide)
     
-    videos = []
-    prefix = "INPUT: "
+    txt_clip = mp.TextClip("INPUT:", fontsize=fontsize, color='white', size=size, method='caption', align='North', font=font)
+    txt_clip = txt_clip.set_pos('bottom').set_duration(3) #.set_pos('center')
+    videos = [txt_clip]
     for slide in slides:
-        videos.append(typing_animate(slide, seconds_per_word, wait_at_the_end, prefix))
-        prefix = ""
+        videos.append(typing_animate(slide, seconds_per_word, wait_at_the_end, ""))
     return mp.concatenate_videoclips(videos)
 
 
 def slideshow(text):
     print("Generating video for: ", text)
-    for punctuation in [". ", "! ", "? ", ": ", "; "]:
-        text = text.replace(punctuation, punctuation + "\n")
-    text = text.split("\n")
+    # for punctuation in [". ", "! ", "? ", ": ", "; "]:
+    #     text = text.replace(punctuation, punctuation + "\n")
+    text = text.split("|")
+    
     slides = []
     for sentence in text:
         words = sentence.split(" ")
@@ -63,6 +63,11 @@ def slideshow(text):
     
     videos = []
     for slide in slides:
+        try:
+            slide, slide_duration = slide.split("t=")
+        except:
+            slide_duration = 7
+        slide_duration = int(slide_duration)
         print("slide: ", slide)
         txt_clip = mp.TextClip(slide, fontsize=fontsize, color='white', size=size, method='caption', align='North', font=font)
         txt_clip = txt_clip.set_pos('bottom').set_duration(slide_duration) #.set_pos('center')

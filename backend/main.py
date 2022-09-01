@@ -342,7 +342,9 @@ def text_to_media(parts, target=None):
                 os.makedirs(f"{target}/{part.actor}", exist_ok=True)    
             
                 if part.actor.lower() == "input":
-                    input_video(text, 0.5, 3).write_videofile(filename, fps=24)
+                    input_video(text, 0.5, 1).write_videofile(filename, fps=24)
+                elif part.actor.lower() == "typing":
+                    input_video(text, 0.5, 1, prefix="").write_videofile(filename, fps=24)
                 else:
                     slideshow(text).write_videofile(filename, fps=24)
 
