@@ -144,6 +144,11 @@ const AudioScreen = props => {
       setStory({...story, medias: files});
     }
 
+    function deletePart(idx) {
+      files.splice(idx, 1);
+      setStory({...story, medias: files});
+    }
+
     function insertEmptyMediaAfter(idx) {
       files.splice(idx + 1, 0, placeholder);
       console.log(files);
@@ -216,6 +221,7 @@ const AudioScreen = props => {
               <div style={{display: isLoading ? 'none' : 'block'}} >
                 <Button onClick={saveStory}>Update</Button>
                 <Button onClick={() => {insertEmptyMediaAfter(idx)}}>Insert</Button>
+                <Button onClick={() => {deletePart(idx)}}>Delete</Button>
                 <Button onClick={() => {playVideo(file.src)}} style={{display: file.media==="video" ? "inline" : "none"}}>Play</Button>
                 Autplay: 
                 <input
