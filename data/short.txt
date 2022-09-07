@@ -3,4 +3,3 @@ Luzia (audio): Kriemhild? Can you hear me?
 Kriemhild (audio): Yes, I can hear you. What's wrong?
 Stage directions (video): This will be rendered as a video and played outside the browser.
 Marin (audio): The next part of the story will be completed by GPT-3
-Luzia (audio): <generate>

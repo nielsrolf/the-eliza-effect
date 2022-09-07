@@ -1,3 +1,4 @@
+from imp import reload
 import os
 
 import openai
@@ -24,14 +25,40 @@ app = FastAPI()
 app.mount("/assets/data", StaticFiles(directory="data"), name="data")
 
 
+
+
+
+
 class Story(BaseModel):
     path: str
     language: str = "en"
     medias: List[Dict] = None
 
-
+from typing import Optional, Union
 class Video(BaseModel):
-    path: str
+    path: str = ""
+    text: str = ""
+    media: str = ""
+    actor: str = ""
+    output: Optional[str] =None
+    duration: Union[float, int] = 0.1
+    generated: Optional[bool] = None
+    raw: str = ""
+    voice: str = ""
+    src: Optional[str] = None
+
+
+
+
+
+display = Video()
+@app.get("/display")
+async def displayBeamer():
+    global display
+    response = display
+    display = Video()
+    return response
+
 
 
 origins = [
@@ -88,6 +115,26 @@ async def generate(template: Story) -> Story:
     return story_de
 
 
+
+
+
+def answer_audience_questions(story_de):
+    i = 0
+    while i < len(story_de):
+        part = story_de[i]
+        if part.actor.lower() == "audience" and part.text != "" and part.text is not None:
+            # if the next part is the answer skip
+            if len(story_de) > i + 1 and story_de[i+1].actor == "GPT":
+                i += 1
+                continue
+            answer = generate_answer(part.text)
+            story_de.insert(i + 1, answer)
+        i += 1
+    return story_de
+
+
+
+
 @app.post("/save")
 async def save(template: Story) -> Story:
     """
@@ -101,6 +148,9 @@ async def save(template: Story) -> Story:
     
     # if template.language != "de":
     #     parts = translate_parts(parts)
+    print("yo")
+    parts = answer_audience_questions(parts)
+    print("yo yo yo")
     story_de = text_to_media(parts, target=target)
     story_de = Story(path=target + "/medias.json", medias=[i.__dict__ for i in story_de])
     return story_de
@@ -115,8 +165,10 @@ def de_to_en(story):
 
 
 @app.post("/play")
-async def play(video: Video):
-    os.system(f"ffplay -fs -autoexit '{video.path}'")
+async def play(part: Video):
+    # os.system(f"ffplay -fs -autoexit '{video.path}'")
+    global display
+    display = part
     return "OK"
 
 
@@ -130,7 +182,7 @@ def main():
     """
     Run the server.
     """
-    uvicorn.run(app, host="0.0.0.0", port=5000)
+    uvicorn.run("backend:app", host="0.0.0.0", port=5000, reload=True)
 
 
 if __name__ == "__main__":

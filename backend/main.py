@@ -13,7 +13,7 @@ from vid import input_video, slideshow
 from dotenv import load_dotenv
 load_dotenv()
 import secrets_file as secrets
-
+from typing import Union
 
 def system(prompt):
     print(prompt)
@@ -62,7 +62,7 @@ class Part:
     voice: str = "Anna"
     src : str = None
     output: str = None
-    
+    duration: Union[int, float] = 1
     @staticmethod
     def parse(raw: str):
         if raw.startswith("PAUSE"):
@@ -85,6 +85,36 @@ class Part:
         text_de = translate(self.text)
         return Part(self.raw, self.actor, self.media, text_de, self.generated, self.voice)
 
+
+interview_prompt = """Hallo, ich bin eine Version von GPT-3, die heute abend im Staatsschauspiel Dresden ein Interview gibt. Ich bin immer freundlich, ehrlich und kreativ. Mein Ziel ist es, interessante Einblicke in das Leben einer KI zu geben. Ich immer recht lange und detaillierte Antworten.
+
+Q: {}
+A: """.format
+
+
+def generate_answer(question):
+    """Replace <generate> with generated text from GPT"""
+    openai.api_key = secrets.OPENAI
+    
+    prompt = interview_prompt(question)
+    response = openai.Completion.create(
+                    model="davinci",
+                    prompt=prompt,
+                    temperature=0.7,
+                    max_tokens=200,
+                    top_p=1,
+                    frequency_penalty=1,
+                    presence_penalty=0,
+                    stop=["Q:", "A:"]
+                )
+    print(response)
+    print(response.choices)
+    text = response.choices[0].text.strip()
+    print("Choice 0:", text)
+    text = postprocess_gpt_text(text)
+    # text = text.split("\n")#.split("\n")[0]
+    answer = Part("", "GPT", "video", text, True, "")
+    return answer
 
 # def fill_template_gpt(parts: List[Part]) -> List[Part]:
 #     """Replace <generate> with generated text from GPT"""
@@ -334,19 +364,20 @@ def text_to_media(parts, target=None):
             system(f"say -o {filename} --data-format=LEF32@22050 '{text}'")
 
         if part.media == "video":
-            text = part.text.replace("'", "\'")
-            if target is not None:
-                filename = f"{target}/{part.actor}/{i + 1}.mp4"
-                part.src = filename
-                part.output = "screen"
-                os.makedirs(f"{target}/{part.actor}", exist_ok=True)    
+            part.duration = 5
+            # text = part.text.replace("'", "\'")
+            # if target is not None:
+            #     filename = f"{target}/{part.actor}/{i + 1}.mp4"
+            #     part.src = filename
+            #     part.output = "screen"
+            #     os.makedirs(f"{target}/{part.actor}", exist_ok=True)    
             
-                if part.actor.lower() == "input":
-                    input_video(text, 0.5, 1).write_videofile(filename, fps=24)
-                elif part.actor.lower() == "typing":
-                    input_video(text, 0.5, 1, prefix="").write_videofile(filename, fps=24)
-                else:
-                    slideshow(text).write_videofile(filename, fps=24)
+            #     if part.actor.lower() == "input":
+            #         input_video(text, 0.5, 1).write_videofile(filename, fps=24)
+            #     elif part.actor.lower() == "typing":
+            #         input_video(text, 0.5, 1, prefix="").write_videofile(filename, fps=24)
+            #     else:
+            #         slideshow(text).write_videofile(filename, fps=24)
 
     with open(f"{target}/medias.json", "w") as f:
         json.dump([i.__dict__ for i in parts], f)
