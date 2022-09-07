@@ -101,7 +101,7 @@ const AudioScreen = props => {
           AudioElement.play();
         }
       }
-      if(files[currentFile].media==='video'){
+      if(files[currentFile].media==='video' && AutoPlay){
         playVideo(files[currentFile])
       }
     },[currentFile, AutoPlay])
@@ -216,10 +216,6 @@ const AudioScreen = props => {
         Speed: <Slider aria-label="Speed" value={playbackRate } onChange={changeAudioSpeed} min={50}  max={150}  style={{
             width: '420px', height: '15px'
           }} size="small"  valueLabelDisplay="auto"/>
-        <Button children='Play video' size='small' onClick={(event) => playVideo(currentMedia)}
-          style={{
-            display: isVideo ? 'block' : 'none'
-          }} />
         <div style={{display: 'flex', width: '100%', justifyContent: 'center'}}>
           <Button children='<' size='small' onClick={handlePrevious} disabled={!currentFile} />
           <Button children='>' onClick={handleNext} />
