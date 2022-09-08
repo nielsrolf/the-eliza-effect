@@ -49,10 +49,6 @@ class Video(BaseModel):
     texts: Any = None
 
     def compute_duration(self):
-        animations = {
-            "audience": "input",
-            "input": "input"
-        }
         texts = self.text.split("|")
         self.texts = []
         self.duration = 0
@@ -69,7 +65,7 @@ class Video(BaseModel):
             self.texts.append({
                 "text": slide,
                 "duration": slide_duration,
-                "animation": animations.get(self.actor.lower(), "slide")
+                "animation": self.media.lower()
             })
 
 

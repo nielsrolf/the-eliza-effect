@@ -101,7 +101,7 @@ const AudioScreen = props => {
           AudioElement.play();
         }
       }
-      if(files[currentFile].media==='video' && AutoPlay){
+      if(["video", "typing", "input"].includes(files[currentFile].media) && AutoPlay){
         playVideo(files[currentFile])
       }
     },[currentFile, AutoPlay])
@@ -235,7 +235,7 @@ const AudioScreen = props => {
                 <Button onClick={saveStory}>Update</Button>
                 <Button onClick={() => {insertEmptyMediaAfter(idx)}}>Insert</Button>
                 <Button onClick={() => {deletePart(idx)}}>Delete</Button>
-                <Button onClick={() => {playVideo(file)}} style={{display: file.media==="video" ? "inline" : "none"}}>Play</Button>
+                <Button onClick={() => {playVideo(files[idx])}} style={{display: ["video", "typing", "input"].includes(files[idx].media) ? "inline" : "none"}}>Play</Button>
                 Autplay: 
                 <input
                   type="checkbox"

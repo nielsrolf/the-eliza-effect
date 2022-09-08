@@ -17,7 +17,7 @@ function showSlide(slides) {
     }
     let slide = slides.shift();
     console.log(slide);
-    if(slide.animation=="slide"){
+    if(slide.animation=="video"){
         document.getElementById("text").innerHTML = slide.text;
     }
     if(slide.animation=="input") {
