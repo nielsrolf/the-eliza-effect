@@ -8,7 +8,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import dataclasses
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Any
 from main import *
 from glob2 import glob
 import json
@@ -46,8 +46,31 @@ class Video(BaseModel):
     raw: str = ""
     voice: str = ""
     src: Optional[str] = None
+    texts: Any = None
 
-
+    def compute_duration(self):
+        animations = {
+            "audience": "input",
+            "input": "input"
+        }
+        texts = self.text.split("|")
+        self.texts = []
+        self.duration = 0
+        for slide in texts:
+            try:
+                slide, slide_duration = slide.split("t=")
+            except:
+                if slide == "":
+                    slide_duration = 0.1
+                else:
+                    slide_duration = 7
+            slide_duration = float(slide_duration)
+            self.duration += slide_duration
+            self.texts.append({
+                "text": slide,
+                "duration": slide_duration,
+                "animation": animations.get(self.actor.lower(), "slide")
+            })
 
 
 
@@ -57,6 +80,8 @@ async def displayBeamer():
     global display
     response = display
     display = Video()
+    response.compute_duration()
+    print(response)
     return response
 
 
