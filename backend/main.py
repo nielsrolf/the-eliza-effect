@@ -14,6 +14,11 @@ from dotenv import load_dotenv
 load_dotenv()
 import secrets_file as secrets
 from typing import Union
+from uuid import uuid4
+
+
+def random_audio_filename(output_dir):
+    return f"{output_dir}/{uuid4().hex}.wav"
 
 def system(prompt):
     print(prompt)
@@ -72,6 +77,7 @@ class Part:
             actor, raw = raw.split(" (", 1)
             media, text = raw.split("): ", 1)
             text = text.strip()
+        
         
         return Part(raw, actor, media, text, False, voices.get(actor, "Anna"))
     
@@ -344,8 +350,7 @@ def text_to_media(parts, target=None):
         next_actor = parts[i + 1].actor if i < len(parts) - 1 else part.actor
         if part.actor == "BREAK":
             print(part)
-            filename = f"{target}/{part.actor}/{i + 1}.wav"
-            os.makedirs(f"{target}/{part.actor}", exist_ok=True)
+            filename = random_audio_filename(target)
             silence(part.text, filename)
             part.src = filename
             part.output = "audio"
@@ -357,14 +362,14 @@ def text_to_media(parts, target=None):
         if part.media == "audio":
             print(part.actor)
             text = part.text.replace("'", "")
-            filename = f"{target}/{part.actor}/{i + 1}.wav"
+            filename = random_audio_filename(target)
             part.src = filename
             part.output = "audio"
             os.makedirs(f"{target}/{part.actor}", exist_ok=True)
             system(f"say -o {filename} --data-format=LEF32@22050 '{text}'")
 
-        if part.media == "video":
-            part.duration = 5
+        # if part.media == "video":
+        #     part.duration = 5
             # text = part.text.replace("'", "\'")
             # if target is not None:
             #     filename = f"{target}/{part.actor}/{i + 1}.mp4"
