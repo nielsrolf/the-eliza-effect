@@ -52,6 +52,7 @@ class Video(BaseModel):
         texts = self.text.split("|")
         self.texts = []
         self.duration = 0
+        animation = self.media.lower()
         for slide in texts:
             try:
                 slide, slide_duration = slide.split("t=")
@@ -65,8 +66,10 @@ class Video(BaseModel):
             self.texts.append({
                 "text": slide,
                 "duration": slide_duration,
-                "animation": self.media.lower()
+                "animation": animation
             })
+            if animation == "input":
+                animation = "typing"
 
 
 

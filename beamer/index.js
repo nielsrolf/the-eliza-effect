@@ -10,6 +10,7 @@ function typingAnimate(slide) {
 
 
 function showSlide(slides) {
+    document.getElementById("text").innerHTML = "";
     console.log("slides", slides);
     if(slides.length == 0) {
         showNextThing();
