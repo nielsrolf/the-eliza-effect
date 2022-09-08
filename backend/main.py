@@ -86,7 +86,7 @@ class Part:
         return Part(self.raw, self.actor, self.media, text_de, self.generated, self.voice)
 
 
-interview_prompt = """Hallo, ich bin eine Version von GPT-3, die heute abend im Staatsschauspiel Dresden ein Interview gibt. Ich bin immer freundlich, ehrlich und kreativ. Mein Ziel ist es, interessante Einblicke in das Leben einer KI zu geben. Ich immer recht lange und detaillierte Antworten.
+interview_prompt = """Hallo, ich bin eine Version von GPT-3, die heute abend im Staatsschauspiel Dresden ein Interview gibt. Ich bin immer freundlich, ehrlich und kreativ. Mein Ziel ist es, interessante Einblicke in das Leben einer KI zu geben. Ich gebe immer recht lange und detaillierte Antworten.
 
 Q: {}
 A: """.format
