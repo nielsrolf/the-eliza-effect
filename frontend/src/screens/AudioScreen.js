@@ -59,10 +59,26 @@ const AudioScreen = props => {
       });
     }
 
-    function handleKeyPress(e) {
-        console.log( "You pressed a key." );
-        console.log(e);
-    }
+    useEffect(() => {
+      const keyDownHandler = event => {
+        console.log('User pressed: ', event.key);
+  
+        if (event.key === 'Escape') {
+          event.preventDefault();
+  
+          // 👇️ your logic here
+          console.log("autoplay before:", AutoPlay);
+          setAutoPlay(!AutoPlay);
+        }
+      };
+  
+      document.addEventListener('keydown', keyDownHandler);
+  
+      // 👇️ clean up event listener
+      return () => {
+        document.removeEventListener('keydown', keyDownHandler);
+      };
+    }, [AutoPlay]);
     
     useEffect(()=>{
       
