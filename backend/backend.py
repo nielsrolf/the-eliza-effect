@@ -68,6 +68,13 @@ class Video(BaseModel):
             })
             if animation == "input":
                 animation = "typing"
+        if self.wait_until_finished:
+            self.texts.append({
+                "text": "",
+                "duration": 0.1,
+                "animation": "video"
+            })
+            
 
 
 
