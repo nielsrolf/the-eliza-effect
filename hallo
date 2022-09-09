@@ -1,0 +1,187 @@
+Marin (none): Wir sollten mal was ganz Praktisches probieren. IMPRO über die KI als Autor, als Geschichtenerzähler, als künstlerisches Potential oder als Einsparpotential für das Theater (Aufführungsrechte, Autor*innen usw.). -> sieh oben
+Marin (none): Wir nehmen jetzt einen bekannten Text, z.B. Goethes „Die Leiden des jungen Werther“. Das habe ich geliebt in meiner Jugend. Wie wäre es mit einem alternativen Ende.
+Kriemhild (none): Ja, das ist toll.
+Luzia (none): Ok
+Marin (none): Die Handlung ist bekannt und schnell erzählt. Ein junger Mann verliebt sich unsterblich in eine junge Frau. Es gibt nur ein Problem: Sie ist schon vergeben. Es endet mit Werthers Selbstmord mithilfe eines Revolvers. Können wir diesen Ausschnitt aus dem Ende haben? INPUT: Ausschnitt aus dem Ende von “Die Leiden des jungen Werther” 
+(input): Ausschnitt aus dem Ende von s=4 | “Die Leiden des jungen Werther” s=4|
+Text (video): “In diesen Kleidern, Lotte, will ich begraben sein, du hast sie berührt, geheiligt; | ich habe auch deinen Vater darum gebeten. | Meine Seele schwebt über dem Sarge.| Man soll meine Taschen nicht aussuchen. |Diese blaßrote Schleife, die du am Busen hattest, als ich dich zum ersten Male unter deinen Kindern fand - | o küsse sie tausendmal und erzähle ihnen das Schicksal ihres unglücklichen Freundes. |Die Lieben! Sie wimmeln um mich. |Ach wie ich mich an dich schloß! |Seit dem ersten Augenblicke dich nicht lassen konnte! |- diese Schleife soll mit mir begraben werden.| An meinem Geburtstage schenktest du sie mir! |Wie ich das alles verschlang! - | ach, ich dachte nicht, daß mich der Weg hierher führen sollte! - - |sei ruhig! Ich bitte dich, sei ruhig!|- Sie sind geladen - es schlägt zwölfe! |So sei es denn! - Lotte! Lotte, lebe wohl! Lebe wohl!"|Ein Nachbar sah den Blick vom Pulver und hörte den Schuß fallen; |da aber alles stille blieb, achtete er nicht weiter drauf.|
+Marin (none): Danke! 
+Marin (none): Wie geht die Geschichte aus? Was sind die letzten Sätze? Generate!
+Text (video): Ich finde, dass dieser Abschnitt eine sehr düstere Stimmung hat.
+Marin (none): Ja, klar. Regenerate!
+Text (video): Am andern Morgen aber kam ein Soldat und sagte, |daß Luxemburg in den Büschen erschossen liege.|
+Kriemhild (none): Luxemburg?
+Luzia: (none): Rosa Luxemburg?
+Marin (none): Ja, das ist doch ein spannender Interpretationsansatz. Wäre ich nie drauf gekommen.
+Luzia (none): Regenerate!
+Text (video): Als er aber am andern Morgen bei Sonnenaufgang in die Stube trat,| fand er den Toten über den Tisch gelehnt, |mit dem Gesicht auf die Erde, neben sich die geladene Pistole.| Die Schleife lag zu seinen Füßen.|
+Marin (none): Regenerate!
+Text (video): Als er einige Tage darauf nach seinen Nachbarn sah und in das Zimmer mit der Leiche trat,| wimmelte es von den Ratten, die das Pulver aufgefressen hatten.| Die auf dem Boden liegende Schleife war nicht angetastet.|
+Luzia (none): Ich mag die Drastik.
+Kriemhild (none): Regenerate!
+Text (video): Einige Tage später - es war ein heller, sonniger Morgen - |ging eine Frau mit einem kleinen Mädchen an der Hand in einem kleinen Garten; |sie pflückte eine Blume und steckte sie in das Mädchenhaar. |Das Kind lachte und freute sich und sprach von dem Vater und daß er so bald kommen werde. |Die Frau aber saß auf einer Bank und weinte. 
+Luzia/Kriemhild (none): Das ist poetisch. Lotte mit ihrem Kind und sie denkt nur an den erschossenen Werther.
+Marin (none): Regenerate! 
+Text (video): Auf einmal erschien er wieder und sagte: | "Ach, ich habe geträumt! O hätte ich doch nicht geträumt! |Wie sind Sie denn so schnell hierhergekommen?" |Er setzte sich auf sein Bett und blieb lange sitzen, den Kopf auf die Hände gesenkt. |Dann nahm er die Zündhölzer und riß eines nach dem andern an, um sich zu erleuchten.| Die Zündhölzer brannten nicht.| Da nahm er ein Streichholz und zündete die Kerze an; das Licht erfreute ihn.
+Text (video): "Jetzt ist es genug", sagte er, "jetzt will ich schlafen."
+Text (video): Er legte sich auf sein Bett und schlief bald ein.
+Luzia (none): Ich bin dran. Tschechow! „Die drei Schwestern“. Die wissen nichts mit ihrem Leben anzufangen und reden über alles und nichts. Das wäre doch was für die KI! Marin, du bist Olga, Kriemihild, Mascha. Ich mache Irina. INPUT:  Der Anfang von Tschechows “Die drei Schwestern”
+(input):  Der Anfang von Tschechows “Die drei Schwestern”
+TEXT (video): ERSTER AKT:  Im Haus der Prosorows. |Ein Wohnzimmer mit Säulen, dahinter ein großer Saal. |Es ist Mittag, draußen ist es sonnig, heiter. |Im Saal wird der Frühstückstisch gedeckt. |Olga, in der blauen Uniform einer Gymnasiallehrerin für Mädchen, korrigiert Hefte, im Stehen und im Gehen. |Mascha, in einem schwarzen Kleid und einem Hut auf den Knien, hat sich gesetzt und liest ein Buch. |Irina, in einem weißen Kleid, steht nachdenklich da.|
+TEXT (video): OLGA: Vater ist genau vor einem Jahr gestorben,| genau an diesem Tag, dem 5. Mai, an deinem Namenstag, Irina. |Es war sehr kalt, es schneite. Ich dachte, ich überlebe es nicht, |du warst bewusstlos, als wärst du tot. |Aber jetzt ist ein Jahr vergangen und es ist nicht traurig, |daran zu denken, du hast ein weißes Kleid an, du strahlst... 
+Text (video): (Die Wanduhr schlägt 12 mal) 
+Text (video): OLGA: Und damals schlug die Uhr genauso.
+Text (video): (Pause)
+Text (video): OLGA: Ich weiß noch, als man Vater raustrug, spielte die Musik, |und auf dem Friedhof haben sie geschossen. |Er war General, mit einer Brigade, aber es sind nur wenige mitgegangen. |Es hat ja auch geregnet. |Heftiger Regen und Schnee.|
+Text (video): IRINA: Wozu daran denken!
+Luzia (none): Kopfhörer an? Generate! 
+Luzia (audio): Wozu daran denken!
+Marin (audio): Jetzt, da es genau ein Jahr her ist, kann ich mich erinnern. Wir sind doch alle drei nass geworden.
+Kriemhild (audio): Wir sind zu spät gekommen, Olga.
+Marin (audio): (Regieanweisung: ohne auf Mascha zu achten) Die Trauergäste sind alle in unserem Haus gewesen. Und dann sind wir allein geblieben.
+Luzia (audio): (Regieanweisung: blickt sich im Zimmer um) Wir sind allein geblieben.
+Marin (audio): (Regieanweisung: fährt fort) Du warst so krank, Irina, dass ich dich nicht allein lassen konnte, ich hab dich nicht einmal waschen können.
+Kriemhild (audio): (Regieanweisung: nicht sehr interessiert) Irina war damals krank?
+Marin (audio): (Regieanweisung: fährt fort) Dein Haar war so verklebt, dass ich es nicht waschen konnte. (Regieanweisung: Pause) Wir haben uns dann beide hingelegt, du und ich, und plötzlich, mitten in der Nacht, hast du angefangen zu weinen.
+Luzia (audio): (Regieanweisung: wie in Trance) Damals weinte ich?
+Marin (audio): (Regieanweisung: fährt fort) Du hast geweint und gesagt: „Ich will nicht mehr leben, ich will nicht mehr leben!“ (Regieanweisung: Pause) Das war in der Nacht, am 5. Mai, genau vor einem Jahr.
+Kriemhild (audio): (Regieanweisung: ungeduldig) Also, was ist daran so interessant, Olga?
+Marin (audio): Nichts, gar nichts. (Regieanweisung: Pause) Ich dachte mir nur, dass es komisch ist, dass wir jetzt hier sind, alle drei, und dass es ein Jahr her ist.
+Kriemhild (audio): (Regieanweisung: steht auf, nimmt ein Buch vom Tisch) Was für ein komischer Gedanke.
+Marin (audio): (Regieanweisung: fährt fort) Und ich dachte, dass ich mich an alles erinnern kann, an jede Einzelheit.
+Luzia (audio):  (Regieanweisung: nachdenklich) An jede Einzelheit.
+Marin (audio): (Regieanweisung: fährt fort) Ich erinnere mich an alles, was passiert ist, seit wir Kinder waren.
+Kriemhild (audio): (Regieanweisung: ohne aufzublicken) Natürlich, du hast ein gutes Gedächtnis, Olga.
+Marin (audio): (Regieanweisung: fährt fort) Aber ich erinnere mich nicht an das, was passiert ist, bevor wir Kinder waren. Doch, ich erinnere mich nur an ein paar Bilder, an ein paar Einzelheiten.
+Kriemhild (audio): (Regieanweisung: ohne aufzublicken) Nein, Olga, das ist nicht möglich.
+Marin (audio): (Regieanweisung: fährt fort) Ich sehe uns drei, wie wir als kleine Mädchen in den Garten gehen. (Pause) Dann sehe ich unseren Vater, wie er auf einem Pferd sitzt. (Pause) Dann sehe ich unsere Mutter, wie sie uns drei in den Armen hält. (Pause) Und das ist alles.
+Kriemhild (audio): (Regieanweisung: ohne aufzublicken) Das ist alles, Olga?
+Marin (audio): Ja, das ist alles.
+Kriemhild (audio): (Regieanweisung: ohne aufzublicken) Und du denkst, dass das alles ist, was passiert ist, bevor wir Kinder waren?
+Marin (audio): (Regieanweisung: zweifelnd) Ja, ich denke, dass das alles ist.
+Luzia (none): Regenerate! 
+Luzia (audio): Wozu daran denken!
+Marin (audio): Ich erinnere mich, als ich klein war, dachte ich, der Tod wäre ein großer weißer Hund. Aber nicht nur ich, sondern alle Kinder dachten so.
+Kriemhild (audio): Damals, als ich noch klein war, glaubte ich, es gibt einen Gott, aber ich wusste nicht, wie er aussieht. Und dann, als ich in die Schule kam, dachte ich, er sieht aus wie unsere Lehrerin Woschtschinskaia. Sie hatte ein kleines Gesicht und eine große Nase.
+Marin (audio): Du hast immer solche Sachen gedacht!
+Kriemhild (audio): Ja, und als ich noch kleiner war, da dachte ich, alle Menschen hätten einen Schwanz.
+Marin (audio): Ach, du hast immer solche Sachen gedacht!
+Kriemhild (audio): Und dann dachte ich, alle Frauen hätten einen Bart.
+Marin (audio): Ach, du hast immer solche Sachen gedacht!
+Kriemhild (audio): Und dann dachte ich, der Mond sei aus Käse.
+Marin (audio): Ach, du hast immer solche Sachen gedacht!
+Kriemhild (audio): Und dann dachte ich, alle Vögel wären aus Holz.
+Marin (audio): Ach, du hast immer solche Sachen gedacht!
+Kriemhild (audio): Und dann dachte ich, alle Bäume seien aus Metall.
+Marin (audio): Ach, du hast immer solche Sachen gedacht!
+Kriemhild (audio): Und dann dachte ich, alle Sterne seien aus Glas.
+Marin (audio): Ach, du hast immer solche Sachen gedacht!
+Kriemhild (audio): Und dann dachte ich, der Himmel sei aus Papier.
+Marin (audio): Ach, du hast immer solche Sachen gedacht!
+Kriemhild (audio): Und dann dachte ich, die Sonne sei aus Feuer. 
+Marin (audio): Ach, du hast immer solche Sachen gedacht!
+Kriemhild (audio): Und dann dachte ich, das Meer sei aus Sand.
+Marin (audio): Ach, du hast immer solche Sachen gedacht!
+Kriemhild (audio): Und dann dachte ich, die Erde sei aus Holz.
+Marin (audio): Ach, du hast immer solche Sachen gedacht!
+Kriemhild (audio): Und dann dachte ich, alle Menschen seien aus Stein.
+(stop)
+Marin (audio): Und jetzt, was denkst du?
+Kriemhild (audio): Ich denke gar nichts mehr.
+Luzia (none): Regenerate!
+Luzia (audio):  Wozu daran denken! Es ist doch alles vorbei.
+Marin (audio): Die Musik spielte, und ich dachte, das ist ja ein seltsamer Tag, mit Musik. Niemand hat uns begleitet, nur ein paar Leute aus der Nachbarschaft. Der Regen prasselte auf die Särge, und auf die Särge der anderen. Wir standen da und sagten uns, dass sie uns bald holen werden. Sie holen uns alle. Aber sie sind nicht gekommen, sie haben uns nicht geholt.
+Kriemhild (audio): (Regieanweisung: liest) "Und wenn wir sterben, dann ist es, als würden wir schlafen."
+Marin (audio): (Regieanweisung: fährt fort) Damals dachte ich, ich bin so tapfer, ich habe keine Angst, aber jetzt weiß ich, ich hatte nur Angst, ich bin nicht tapfer.
+Luzia (audio): (Regieanweisung: nach einer Pause) Olga, ich habe geträumt...
+Marin (audio): Was hast du geträumt?
+Luzia (audio): Ich weiß nicht, ich erinnere mich nicht...
+Marin (audio): Was hast du geträumt?
+Luzia (audio): Ich weiß nicht, ich habe es vergessen...
+Marin (audio): Erzähl es mir.
+Luzia (audio): Ich weiß nicht, es ist so seltsam...
+Marin (audio): Erzähl es mir.
+Luzia (audio): Ich weiß nicht, ich kann mich nicht erinnern...
+Marin (audio): (nach einer Pause) Nun, was ist?
+Kriemhild (audio): (Regieanweisung: liest) "Und wenn wir sterben, dann ist es, als würden wir schlafen."
+Luzia (audio): (Regieanweisung: nach einer Pause) Olga, hast du Angst vor dem Tod?
+Marin (audio): (Regieanweisung: nach einer Pause) Nein.
+Luzia (audio): Warum nicht?
+Marin (audio): Ich weiß nicht, ich habe noch nicht darüber nachgedacht.
+Kriemhild (audio): (Regieanweisung: liest) "Und wenn wir sterben, dann ist es, als würden wir schlafen."
+Luzia (audio): (Regieanweisung: nach einer Pause) Olga, hast du je darüber nachgedacht, was nach dem Tod kommt?
+Marin (audio): (Regieanweisung: nach einer Pause) Nein.
+Luzia (audio): Warum nicht?
+Marin (audio): (Regieanweisung: nach einer Pause) Ich weiß nicht, ich habe noch nicht darüber nachgedacht.
+Kriemhild (audio): (Regieanweisung: liest) "Und wenn wir sterben, dann ist es, als würden wir schlafen."
+Marin (audio): (Regieanweisung: nach einer Pause) Irina, hast du Angst vor dem Tod?
+Luzia (audio): (Regieanweisung: nach einer Pause) Nein.
+Luzia (none): Nochmal? Regenerate!
+Luzia (audio): Wozu daran denken!
+Marin (audio): Warum, es ist ja nicht traurig.
+Kriemhild (audio): (Regieanweisung: liest noch immer) Olga, hör auf zu reden!
+Marin (audio): Ich rede ja gar nicht.
+Kriemhild (audio): Bitte hör auf!
+Marin (audio): Warum?
+Kriemhild (audio): Ich ertrage es nicht.
+Marin (audio): Was erträgst du nicht?
+Kriemhild (audio): Das alles.
+Marin (audio): Was denn?
+Kriemhild (audio): Die Erinnerung.
+Marin (audio): Aber es ist doch nicht traurig.
+Kriemhild (audio): Olga, bitte hör auf!
+Marin (audio): Warum?
+Kriemhild (audio): Es ist widerlich.
+Marin (audio): Was ist widerlich?
+Kriemhild (audio): Das Geschwätz.
+Marin (audio): Aber ich rede ja gar nicht.
+Kriemhild (audio): Bitte hör auf!
+Marin (audio): (Regieanweisung: nach einer Pause) Also gut. (Pause) Du bist krank, Mascha.
+Kriemhild (audio): Nein, ich bin nicht krank.
+Marin (audio): Doch, du bist krank.
+Kriemhild (audio): Nein.
+Marin (audio): Sag, was du willst, aber du bist krank.
+Kriemhild (audio): (Regieanweisung: nach einer Pause) Vielleicht bin ich krank.
+Marin (audio): Natürlich bist du krank.
+Kriemhild (audio): (Regieanweisung: nach einer Pause) Vielleicht.
+Marin (audio): (Regieanweisung: nach einer Pause) Warum bist du dann nicht bei Doktor Cheburjew?
+Kriemhild (audio): Was soll er denn tun?
+Marin (audio): Er soll dich untersuchen.
+Kriemhild (audio): Was soll er untersuchen?
+Marin (audio): Na, was denn, deinen Kopf, deinen Magen.
+Kriemhild (audio): Meinen Magen?
+Marin (audio): Ja, deinen Magen.
+Kriemhild (audio): Was soll er mit meinem Magen machen?
+Luzia (audio): Bitte, Olga, lass sie in Ruhe.
+Marin (audio): Warum denn?
+Luzia (audio): Es ist doch nicht notwendig.
+Marin (audio): Na gut, ich will dir sagen, was notwendig ist. (Regieanweisung: Pause) Ich habe heute früh einen Brief von Andrej bekommen. Er kommt bald, vielleicht sogar morgen.
+Kriemhild (audio): Andrej?
+Marin (audio): Ja, Andrej.
+Kriemhild (audio): Andrej Wlassow?
+Marin (audio): Ja, Andrej Wlassow.
+Kriemhild (audio): Andrej Wlassow kommt?
+Marin (audio): Ja.
+Luzia (audio): (Regieanweisung: nach einer Pause) Wer ist Andrej Wlassow?
+Marin (audio): Du hast doch von ihm gehört.
+Luzia (audio): Nein.
+Marin (audio): Ach, du weißt nicht, wer Andrej Wlassow ist?
+Luzia (audio): Nein.
+Marin (audio): Nun, dann will ich es dir sagen. Andrej Wlassow ist ein sehr bekannter Schauspieler. Er ist in Moskau bekannt wie ein bunter Hund.
+Luzia (audio): Ach, ja.
+Marin (audio): Er war hier, als Vater noch lebte. Er hat eine unheimliche Ähnlichkeit mit Vater. Vater hat ihn sehr gemocht.
+Luzia (audio): Ach, ja.
+Marin (audio): Er hat ihn sogar einmal hierher eingeladen, aber er ist nicht gekommen.
+Luzia (audio): Warum nicht?
+Marin (audio): Nun, er hatte keine Zeit.
+Kriemhild (audio): Olga, bitte hör auf.
+Marin (audio): Warum, Mascha?
+Kriemhild (audio): Ich ertrage es nicht.
+Marin (audio): Was erträgst du nicht?
+Kriemhild (audio): Dass du ständig redest.
+Marin (audio): Aber ich rede doch gar nicht.Kriemhild (none): Wie wäre es mit etwas Modernerem? Etwas von Brecht. INPUT: Als im weißen Mutterschoße aufwuchs Baal.
+(input): Als im weißen Mutterschoße aufwuchs Baal
+Kriemhild (audio): porno. dann wird sie gefickt. sex anzeigen osterreich. latina lesben lecken sich gegenseitig. ficken heiße mädchen. nackt russische braut geschichten. hd porno videoclip punkt com. vorspiel mit einem sehr heißen mädchen. gepisst. titten mit schwanz fickt sich die sahneschnitte. selbst machen. nur der riesige pimmel. neue wunderbare sexgeschichten. ein mädchen das sich auszieht. interrassisch dating in kenia. tätowierter junger beim. durchschnittlicher sex pro woche für ehepaare. große Brüste saugen. ich möchte sex mit mama. STOP.
+CONTEXT (none): Kriemhild ist verwirrt. Sie beginnt, ihre Kopfhörer abzunehmen.
+Context (none): Kopfhörer Kriemhild plappert weiter.
+Kriemhild (audio): porno. dann wird sie gefickt. sex anzeigen osterreich. latina lesben lecken sich gegenseitig. ficken heiße mädchen. nackt russische braut geschichten. hd porno videoclip punkt com. vorspiel mit einem sehr heißen mädchen. gepisst. titten mit schwanz fickt sich die sahneschnitte. selbst machen. nur der riesige pimmel. neue wunderbare sexgeschichten. ein mädchen das sich auszieht. interrassisch dating in kenia. tätowierter junger beim. durchschnittlicher sex pro woche für ehepaare. große Brüste saugen. ich möchte sex mit mama.
