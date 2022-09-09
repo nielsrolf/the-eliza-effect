@@ -26,9 +26,6 @@ app.mount("/assets/data", StaticFiles(directory="data"), name="data")
 
 
 
-
-
-
 class Story(BaseModel):
     path: str
     language: str = "en"
@@ -47,6 +44,7 @@ class Video(BaseModel):
     voice: str = ""
     src: Optional[str] = None
     texts: Any = None
+    wait_until_finished: bool = False
 
     def compute_duration(self):
         texts = self.text.split("|")
@@ -57,7 +55,7 @@ class Video(BaseModel):
             try:
                 slide, slide_duration = slide.split("t=")
             except:
-                if slide == "":
+                if slide == "" or not self.wait_until_finished:
                     slide_duration = 0.1
                 else:
                     slide_duration = 7
@@ -73,12 +71,15 @@ class Video(BaseModel):
 
 
 
-display = Video()
+display = []
+default_text = ""
 @app.get("/display")
 async def displayBeamer():
     global display
-    response = display
-    display = Video()
+    if len(display) > 0:
+        response = display.pop(0)
+    else:
+        response = Video(text=default_text, media="video")
     response.compute_duration()
     print(response)
     return response
@@ -121,8 +122,6 @@ def load_story(story: Story):
     return story
 
 
-
-
 @app.post("/generate")
 async def generate(template: Story) -> Story:
     """
@@ -139,9 +138,6 @@ async def generate(template: Story) -> Story:
     return story_de
 
 
-
-
-
 def answer_audience_questions(story_de):
     i = 0
     while i < len(story_de):
@@ -155,8 +151,6 @@ def answer_audience_questions(story_de):
             story_de.insert(i + 1, answer)
         i += 1
     return story_de
-
-
 
 
 @app.post("/save")
@@ -189,11 +183,14 @@ def de_to_en(story):
 
 
 @app.post("/play")
-async def play(part: Video):
+async def play(part: Video) -> Video:
     # os.system(f"ffplay -fs -autoexit '{video.path}'")
     global display
-    display = part
-    return "OK"
+    global default_text
+    part.compute_duration()
+    default_text = part.texts[-1]["text"]
+    display += [part]
+    return part
 
 
 @app.get("/available")

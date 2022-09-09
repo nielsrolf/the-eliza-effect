@@ -52,8 +52,14 @@ const AudioScreen = props => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(part)
       };
+      console.log("play", part);
       const response = await fetch(`http://localhost:5000/play/`, requestOptions).then(res => {
-        setTimeout(handleNext, 1000 * part.duration);
+        return res.json()}).then(part => {
+        if(part.wait_until_finished){
+          setTimeout(handleNext, 1000 * part.duration);
+        } else {
+          handleNext();
+        }
       }).catch(err => {
         console.log(err);
       });
@@ -187,6 +193,20 @@ const AudioScreen = props => {
       console.log(files);
       setStory({...story, medias: files});
     }
+
+    function changeWaitUntilFinish(idx) {
+      files[idx].wait_until_finished = !files[idx].wait_until_finished;
+      setStory({...story, medias: files});
+    }
+
+    function clearScreenAndHandleNext() {
+      playVideo({
+        "text": "",
+        "duration": 0.1,
+        "media": "video"
+      });
+      handleNext();
+    }
     
     const saveStory = async () => {
   
@@ -223,7 +243,7 @@ const AudioScreen = props => {
             width: '420px', height: '15px',
             display: isAudio ? 'inline' : 'none'
           }}
-          onEnded={handleNext}
+          onEnded={clearScreenAndHandleNext}
           src={`http://localhost:5000/assets/${currentMedia.src}`}
           id='track01'
           playbackRate={playbackRate / 100}
@@ -243,6 +263,9 @@ const AudioScreen = props => {
           files.map((file, idx) =>
             <FileListItem id={file.src} isActive={idx === currentFile} key={idx}>
               <Button onClick={()=>setCurrentFile(idx)}>Select</Button>
+              <div style={{display: ["video", "typing", "input"].includes(files[idx].media) ? "inline" : "none"}}>
+                Autoplay wartet bis das Video vorbei ist: <input type="checkbox" checked={file.wait_until_finished} onChange={() => changeWaitUntilFinish(idx)} />
+              </div>
               <input type="text" name="actor" value={file.actor} onChange={(event) => updateActor(idx, event.target.value)}/>:
               <input type="text" name="media" value={file.media} onChange={(event) => updateMedia(idx, event.target.value)}/>
               <textarea name="src" value={file.text} style={{width: "100%"}} onChange={(event) => updateText(idx, event.target.value)}/>
@@ -252,7 +275,7 @@ const AudioScreen = props => {
                 <Button onClick={() => {insertEmptyMediaAfter(idx)}}>Insert</Button>
                 <Button onClick={() => {deletePart(idx)}}>Delete</Button>
                 <Button onClick={() => {playVideo(files[idx])}} style={{display: ["video", "typing", "input"].includes(files[idx].media) ? "inline" : "none"}}>Play</Button>
-                Autplay: 
+                Autoplay: 
                 <input
                   type="checkbox"
                   checked={AutoPlay}

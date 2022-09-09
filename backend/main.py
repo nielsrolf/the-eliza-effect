@@ -68,6 +68,7 @@ class Part:
     src : str = None
     output: str = None
     duration: Union[int, float] = 1
+    wait_until_finished: bool = False
     @staticmethod
     def parse(raw: str):
         if raw.startswith("PAUSE"):

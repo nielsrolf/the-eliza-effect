@@ -6,11 +6,13 @@ function typingAnimate(slide) {
             document.getElementById("text").innerHTML += slide.text[i];
         }, i * t * 1000)
     }
+    setTimeout(() => {
+        document.getElementById("text").innerHTML = "";
+    }, slide.duration * 1000)
 }
 
 
 function showSlide(slides) {
-    document.getElementById("text").innerHTML = "";
     console.log("slides", slides);
     if(slides.length == 0) {
         showNextThing();
@@ -33,7 +35,7 @@ function showSlide(slides) {
 
 
 function showNextThing() {
-    document.getElementById("text").innerHTML = "";
+    
     fetch("http://localhost:5000/display").then(function(response) {
         return response.json();
     }).then(function(data) {
