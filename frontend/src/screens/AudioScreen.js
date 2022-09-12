@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import { Button, Slider } from "@mui/material";
 import { useEffect, useState } from "react";
-import Switch from "../components/Switch";
 import { useMIDIOutput } from "../hooks/useMidiOutput";
 
 // 0 db
@@ -26,25 +25,25 @@ const outputs = {
 const AudioScreen = props => {
     let { story, setStory, midiOutput } = props;
 
-    const placeholder = { src: "", text: "", output: 0, media: "none", actor: "", raw: "", output: "" };
+    const placeholder = { src: "", text: "", output: 0, media: "none", actor: "", raw: "" };
     let files = story.medias.length > 0 ? story.medias : [placeholder];
   
     const { cc } = useMIDIOutput(midiOutput);
-    const [ selectedOutput, setSelectedOutput ] = useState({ name: 'default' });
+    // const [ selectedOutput, setSelectedOutput ] = useState({ name: 'default' });
   
     const [ currentFile_, setCurrentFile ] = useState(0);
     const [ AutoPlay, setAutoPlay ] = useState(false)
     const currentFile = currentFile_ > files.length - 1 ? 0 : currentFile_;
     const [isLoading, setIsLoading] = useState(false);
-    const [playbackRate, setPlaybackRate] = useState(100);
+    // const [playbackRate, setPlaybackRate] = useState(100);
 
     console.log("autoPlay", AutoPlay)
 
 
-    const changeAudioSpeed = (event) => {
-      document.getElementById('track01').playbackRate = event.target.value / 100;
-      setPlaybackRate(event.target.value);
-    }
+    // const changeAudioSpeed = (targetSpeed) => {
+    //   document.getElementById('track01').playbackRate =targetSpeed / 100;
+    //   // setPlaybackRate(event.target.value);
+    // }
 
     const playVideo = async (part) => {
       const requestOptions = {
@@ -53,7 +52,7 @@ const AudioScreen = props => {
         body: JSON.stringify(part)
       };
       console.log("play", part);
-      const response = await fetch(`http://localhost:5000/play/`, requestOptions).then(res => {
+      await fetch(`http://localhost:5000/play/`, requestOptions).then(res => {
         return res.json()}).then(part => {
         if(part.wait_until_finished){
           setTimeout(handleNext, 1000 * part.duration);
@@ -87,10 +86,8 @@ const AudioScreen = props => {
     }, [AutoPlay]);
     
     useEffect(()=>{
-      
       const AudioElement = document.getElementById('track01');
-
-      AudioElement.playbackRate = playbackRate / 100;
+      
       function handleOutputChange(actor){
         console.log("output changed to: ", outputs[actor]);
         if (!actor) return;
@@ -142,7 +139,7 @@ const AudioScreen = props => {
         setAutoPlay(false);
       }
       setCurrentFile(nextFile);
-      document.getElementById('track01').playbackRate = playbackRate / 100;
+      document.getElementById('track01').playbackRate = nextFile.speed / 100;
       if(files[nextFile].media==="break") {
         let seconds = parseInt(files[nextFile].text);
         setTimeout(() => handleNextOffset(offset + 1), seconds * 1000)
@@ -207,6 +204,11 @@ const AudioScreen = props => {
       });
       handleNext();
     }
+
+    function updateSpeed(idx, speed) {
+      files[idx].speed = speed;
+      setStory({...story, medias: files});
+    }
     
     const saveStory = async () => {
   
@@ -246,12 +248,8 @@ const AudioScreen = props => {
           onEnded={clearScreenAndHandleNext}
           src={`http://localhost:5000/assets/${currentMedia.src}`}
           id='track01'
-          playbackRate={playbackRate / 100}
           >  
         </audio>
-        Speed: <Slider aria-label="Speed" value={playbackRate } onChange={changeAudioSpeed} min={50}  max={150}  style={{
-            width: '420px', height: '15px'
-          }} size="small"  valueLabelDisplay="auto"/>
         <div style={{display: 'flex', width: '100%', justifyContent: 'center'}}>
           <Button children='<' size='small' onClick={handlePrevious} disabled={!currentFile} />
           <Button children='>' onClick={handleNext} />
@@ -271,6 +269,11 @@ const AudioScreen = props => {
               <textarea name="src" value={file.text} style={{width: "100%"}} onChange={(event) => updateText(idx, event.target.value)}/>
 
               <div style={{display: isLoading ? 'none' : 'block'}} >
+               <div style={{display: file.media=="audio" ? 'block' : 'none'}} >
+                  Speed: <Slider aria-label="Speed" value={file.speed } onChange={(event) => updateSpeed(idx, event.target.value)} min={50}  max={150}  style={{
+                    width: '420px', height: '15px'
+                  }} size="small"  valueLabelDisplay="auto"/>
+                </div>
                 <Button onClick={saveStory}>Update</Button>
                 <Button onClick={() => {insertEmptyMediaAfter(idx)}}>Insert</Button>
                 <Button onClick={() => {deletePart(idx)}}>Delete</Button>
@@ -280,7 +283,7 @@ const AudioScreen = props => {
                   type="checkbox"
                   checked={AutoPlay}
                   onChange={() => setAutoPlay(!AutoPlay)}
-                  playbackRate="0.5"
+                  // playbackRate="0.5"
                 />
               </div>
 

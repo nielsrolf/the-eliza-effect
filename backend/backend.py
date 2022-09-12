@@ -45,7 +45,8 @@ class Video(BaseModel):
     src: Optional[str] = None
     texts: Any = None
     wait_until_finished: bool = False
-
+    speed: float = 100
+    
     def compute_duration(self):
         texts = self.text.split("|")
         self.texts = []
