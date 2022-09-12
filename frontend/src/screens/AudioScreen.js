@@ -20,6 +20,12 @@ const outputs = {
   "ALLE": "all",
   "All": "all",
   "all": "all",
+  "Raum": 116 ,
+  "raum": 116 ,
+  "Raum": 116 ,
+  "ROOM": 116 ,
+  "RAUM": 116 ,
+  "room": 116 
 }
 
 
