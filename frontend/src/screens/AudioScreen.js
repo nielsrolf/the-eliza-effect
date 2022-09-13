@@ -139,7 +139,6 @@ const AudioScreen = props => {
         setAutoPlay(false);
       }
       setCurrentFile(nextFile);
-      document.getElementById('track01').playbackRate = nextFile.speed / 100;
       if(files[nextFile].media==="break") {
         let seconds = parseInt(files[nextFile].text);
         setTimeout(() => handleNextOffset(offset + 1), seconds * 1000)
@@ -245,6 +244,7 @@ const AudioScreen = props => {
             width: '420px', height: '15px',
             display: isAudio ? 'inline' : 'none'
           }}
+          onPlay={() => {document.getElementById("track01").playbackRate = (currentMedia.speed || 100) / 100}}
           onEnded={clearScreenAndHandleNext}
           src={`http://localhost:5000/assets/${currentMedia.src}`}
           id='track01'
@@ -270,7 +270,7 @@ const AudioScreen = props => {
 
               <div style={{display: isLoading ? 'none' : 'block'}} >
                <div style={{display: file.media=="audio" ? 'block' : 'none'}} >
-                  Speed: <Slider aria-label="Speed" value={file.speed } onChange={(event) => updateSpeed(idx, event.target.value)} min={50}  max={150}  style={{
+                  Speed: <Slider aria-label="Speed" value={file.speed ? file.speed : 100  } onChange={(event) => updateSpeed(idx, event.target.value)} min={50}  max={150}  style={{
                     width: '420px', height: '15px'
                   }} size="small"  valueLabelDisplay="auto"/>
                 </div>

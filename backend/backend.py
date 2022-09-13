@@ -126,7 +126,7 @@ def load_story(story: Story):
         )
     elif story.path.endswith(".json"):
         with open(story.path) as f:
-            story.medias = json.load(f)
+            story.medias = [Part(**i).__dict__ for i in json.load(f)]
     return story
 
 

@@ -9,7 +9,6 @@ from tqdm import tqdm
 import time
 import json
 import numpy as np
-from vid import input_video, slideshow
 from dotenv import load_dotenv
 load_dotenv()
 import secrets_file as secrets
@@ -69,6 +68,7 @@ class Part:
     output: str = None
     duration: Union[int, float] = 1
     wait_until_finished: bool = False
+    speed: float = 100
     @staticmethod
     def parse(raw: str):
         if raw.startswith("PAUSE"):
