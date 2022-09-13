@@ -45,7 +45,8 @@ class Video(BaseModel):
     src: Optional[str] = None
     texts: Any = None
     wait_until_finished: bool = False
-
+    speed: float = 100
+    
     def compute_duration(self):
         texts = self.text.split("|")
         self.texts = []
@@ -125,7 +126,7 @@ def load_story(story: Story):
         )
     elif story.path.endswith(".json"):
         with open(story.path) as f:
-            story.medias = json.load(f)
+            story.medias = [Part(**i).__dict__ for i in json.load(f)]
     return story
 
 
