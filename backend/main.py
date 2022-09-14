@@ -120,7 +120,7 @@ def generate_answer(question):
     print("Choice 0:", text)
     text = postprocess_gpt_text(text)
     # text = text.split("\n")#.split("\n")[0]
-    answer = Part("", "GPT", "video", text, True, "")
+    answer = Part("", "Luzia", "audio", text, True, "")
     return answer
 
 # def fill_template_gpt(parts: List[Part]) -> List[Part]:
