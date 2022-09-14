@@ -8,23 +8,23 @@ const MAX_VOLUME = 104;
 
 
 const outputs = {
-  "Luzia": 104,
-  "Marin": 106,
-  "Kriemhild": 108,
-  "LUZIA": 104,
-  "MARIN": 106,
-  "KRIEMHILD": 108,
+  "Luzia": 112,
+  "Marin": 114,
+  "Kriemhild": 116,
+  "LUZIA": 112,
+  "MARIN": 114,
+  "KRIEMHILD": 116,
   "Alle": "all",
   "ALL": "all",
   "ALLE": "all",
   "All": "all",
   "all": "all",
-  "Raum": 116 ,
-  "raum": 116 ,
-  "Raum": 116 ,
-  "ROOM": 116 ,
-  "RAUM": 116 ,
-  "room": 116 
+  "Raum": 110 ,
+  "raum": 110 ,
+  "Raum": 110 ,
+  "ROOM": 110 ,
+  "RAUM": 110 ,
+  "room": 110 
 }
 
 
@@ -106,12 +106,16 @@ const AudioScreen = props => {
           return
         }
         // mute all channels
-        for(let i = 104; i <= 109; i++){
-          cc(0, i, 9);
+        for(let i = 0; i <= 127; i++){
+          try{
+            cc(0, i, 9);
+          } catch (err) {
+            console.log("did not mute", i);
+          }
         }
         for(let singleActor of actor.split("+")){
           // set selected channel to max volume
-          let channel = outputs[singleActor];
+          let channel = outputs[singleActor] || parseInt(singleActor);
           cc(MAX_VOLUME, channel, 9);
           cc(MAX_VOLUME, channel + 1, 9);
           // setSelectedOutput(channel); 
