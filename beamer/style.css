@@ -1,5 +1,5 @@
 body {
-    background-color:rgb(50, 50, 50);
+    background-color: black;
     color: #22CCBB;
     font-family: monospace;
     size: 13px;
@@ -7,9 +7,10 @@ body {
 
 #text {
     width: 700px;
-    font-size: 35px;
+    font-size: 39px;
     color: white;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
+    padding-top: 60px;
 }

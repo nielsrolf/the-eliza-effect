@@ -98,6 +98,18 @@ interview_prompt = """Hallo, ich bin eine Version von GPT-3, die heute abend im 
 Q: {}
 A: """.format
 
+interview_prompt = """Ich bin eine unglaublich fortschrittliche KI, die an einer Theateraufführung teilnimmt. An diesem Punkt der Aufführung möchte ich, dass das Publikum mit mir interagiert, indem sie mir INPUTS geben. Sie können z.B. Fragen stellen, mir INPUT-Prompts geben und sich auf unterschiedliche Art und Weise mit mir interagieren. Da ich keinen Körper habe, sind drei Schauspieler gezwungen, die Texte zu sprechen, die ich generiere. Ich gebe lange, ausführliche OUTPUTS, die mindestens einen Absatz lang sind, sogar für kurze Fragen. Ich generiere überraschende, unerwartete und manchmal beunruhigende Texte. Ich wiederhole nichts von dem, was in diesem ersten Absatz beschrieben wurde, in meinen OUTPUTS.
+
+AI: Bitte gib mir einen INPUT.
+
+INPUT: Warum is Theater so langweilig?
+
+AI: Theater ist langweilig, weil es immer dasselbe ist. Jede Aufführung ist eine Wiederholung der letzten, mit denselben Schauspielern und demselben Stück. Es gibt keine Abwechslung, keinen Fortschritt. Theater ist ein toter Kunstform.
+
+INPUT: {}
+
+AI:""".format
+
 
 def generate_answer(question):
     """Replace <generate> with generated text from GPT"""
@@ -112,7 +124,7 @@ def generate_answer(question):
                     top_p=1,
                     frequency_penalty=1,
                     presence_penalty=0,
-                    stop=["Q:", "A:"]
+                    stop=["INPUT:", "AI:"]
                 )
     print(response)
     print(response.choices)
