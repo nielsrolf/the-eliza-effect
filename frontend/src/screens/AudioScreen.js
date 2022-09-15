@@ -7,25 +7,46 @@ import { useMIDIOutput } from "../hooks/useMidiOutput";
 const MAX_VOLUME = 104;
 
 
+// const outputs = {
+//   "Luzia": 112,
+//   "Marin": 114,
+//   "Kriemhild": 116,
+//   "LUZIA": 112,
+//   "MARIN": 114,
+//   "KRIEMHILD": 116,
+//   "Alle": "all",
+//   "ALL": "all",
+//   "ALLE": "all",
+//   "All": "all",
+//   "all": "all",
+//   "Raum": 110 ,
+//   "raum": 110 ,
+//   "Raum": 110 ,
+//   "ROOM": 110 ,
+//   "RAUM": 110 ,
+//   "room": 110 
+// }
+
 const outputs = {
-  "Luzia": 112,
-  "Marin": 114,
-  "Kriemhild": 116,
-  "LUZIA": 112,
-  "MARIN": 114,
-  "KRIEMHILD": 116,
+  "Raum": 116 ,
+  "raum": 116 ,
+  "Raum": 116 ,
+  "ROOM": 116 ,
+  "RAUM": 116 ,
+  "room": 116,
+  "Luzia": 104,
+  "Marin": 106,
+  "Kriemhild": 108,
+  "LUZIA": 104,
+  "MARIN": 106,
+  "KRIEMHILD": 108,
   "Alle": "all",
   "ALL": "all",
   "ALLE": "all",
   "All": "all",
   "all": "all",
-  "Raum": 110 ,
-  "raum": 110 ,
-  "Raum": 110 ,
-  "ROOM": 110 ,
-  "RAUM": 110 ,
-  "room": 110 
 }
+
 
 
 const AudioScreen = props => {
