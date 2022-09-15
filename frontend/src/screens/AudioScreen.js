@@ -58,7 +58,7 @@ const AudioScreen = props => {
         body: JSON.stringify(part)
       };
       console.log("play", part);
-      await fetch(`http://localhost:5000/play/`, requestOptions).then(res => {
+      await fetch(`http://localhost:8726/play/`, requestOptions).then(res => {
         return res.json()}).then(part => {
         if(part.wait_until_finished){
           setTimeout(handleNext, 1000 * part.duration);
@@ -228,7 +228,7 @@ const AudioScreen = props => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(props.story, null, 4)
         };
-        const response = await fetch('http://localhost:5000/save', requestOptions);
+        const response = await fetch('http://localhost:8726/save', requestOptions);
   
         if (!response.ok) {
           throw new Error(`Error! status: ${response.status}`);
@@ -256,7 +256,7 @@ const AudioScreen = props => {
           }}
           onPlay={() => {document.getElementById("track01").playbackRate = (currentMedia.speed || 100) / 100}}
           onEnded={clearScreenAndHandleNext}
-          src={`http://localhost:5000/assets/${currentMedia.src}`}
+          src={`http://localhost:8726/assets/${currentMedia.src}`}
           id='track01'
           >  
         </audio>

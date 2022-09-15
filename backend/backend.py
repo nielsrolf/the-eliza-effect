@@ -211,7 +211,7 @@ def main():
     """
     Run the server.
     """
-    uvicorn.run("backend:app", host="0.0.0.0", port=5000, reload=True)
+    uvicorn.run("backend:app", host="0.0.0.0", port=8726, reload=True)
 
 
 if __name__ == "__main__":

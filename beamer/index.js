@@ -36,7 +36,7 @@ function showSlide(slides) {
 
 function showNextThing() {
     
-    fetch("http://localhost:5000/display").then(function(response) {
+    fetch("http://localhost:8726/display").then(function(response) {
         return response.json();
     }).then(function(data) {
         console.log("data", data);

@@ -17,7 +17,7 @@ function SelectPath(props) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ path: event.target.value }, null, 4)
     };
-    const response = await fetch('http://localhost:5000/open', requestOptions);
+    const response = await fetch('http://localhost:8726/open', requestOptions);
 
     if (!response.ok) {
     throw new Error(`Error! status: ${response.status}`);
@@ -39,7 +39,7 @@ function SelectPath(props) {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             };
-            const response = await fetch('http://localhost:5000/available', requestOptions);
+            const response = await fetch('http://localhost:8726/available', requestOptions);
 
             if (!response.ok) {
                 throw new Error(`Error! status: ${response.status}`);

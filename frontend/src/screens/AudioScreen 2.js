@@ -36,7 +36,7 @@ const AudioScreen = props => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({path: src})
       };
-      const response = await fetch(`http://localhost:5000/play/`, requestOptions).then(res => {
+      const response = await fetch(`http://localhost:8726/play/`, requestOptions).then(res => {
         handleNext();
       }).catch(err => {
         console.log(err);
@@ -131,7 +131,7 @@ const AudioScreen = props => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(props.story, null, 4)
         };
-        const response = await fetch('http://localhost:5000/save', requestOptions);
+        const response = await fetch('http://localhost:8726/save', requestOptions);
   
         if (!response.ok) {
           throw new Error(`Error! status: ${response.status}`);
