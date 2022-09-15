@@ -45,6 +45,7 @@ const outputs = {
   "ALLE": "all",
   "All": "all",
   "all": "all",
+  "AI": "all"
 }
 
 
