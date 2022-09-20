@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { Button, Slider } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useMIDIOutput } from "../hooks/useMidiOutput";
+import React from 'react';
 
 // 0 db
 const MAX_VOLUME = 104;
@@ -66,6 +67,7 @@ const AudioScreen = props => {
     // const [playbackRate, setPlaybackRate] = useState(100);
 
     console.log("autoPlay", AutoPlay)
+    const refs = files.map(() => React.createRef());
 
 
     // const changeAudioSpeed = (targetSpeed) => {
@@ -171,6 +173,10 @@ const AudioScreen = props => {
         setAutoPlay(false);
       }
       setCurrentFile(nextFile);
+      refs[nextFile].current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
       if(files[nextFile].media==="break") {
         let seconds = parseInt(files[nextFile].text);
         setTimeout(() => handleNextOffset(offset + 1), seconds * 1000)
@@ -207,7 +213,12 @@ const AudioScreen = props => {
 
     function updateMedia(idx, media) {
       files[idx].media = media;
-      files[idx].src = "";
+      console.log(files[idx])
+      if(media=="extern"){
+        files[idx].src = files[idx].text
+      }else{
+        files[idx].src = "";
+      }
       setStory({...story, medias: files});
     }
 
@@ -267,13 +278,13 @@ const AudioScreen = props => {
     };
 
     const currentMedia = files.length > 0 ? files[currentFile] : {src: null, media: 'None'};
-    const isAudio = currentMedia.media === 'audio';
+    const isAudio = currentMedia.media === 'audio' || currentMedia.media === 'extern';
     const isVideo = currentMedia.media === 'video';
   
     return <Container>
       <div  style={{position: 'absolut', bottom: 0}} >
         <audio controls style={{
-            width: '420px', height: '15px',
+            width: '100%', height: '80px',
             display: isAudio ? 'inline' : 'none'
           }}
           onPlay={() => {document.getElementById("track01").playbackRate = (currentMedia.speed || 100) / 100}}
@@ -291,7 +302,7 @@ const AudioScreen = props => {
       <FileListContainer>
         {
           files.map((file, idx) =>
-            <FileListItem id={file.src} isActive={idx === currentFile} key={idx}>
+            <FileListItem id={file.src} isActive={idx === currentFile} key={idx} ref={refs[idx]}>
               <Button onClick={()=>setCurrentFile(idx)}>Select</Button>
               <div style={{display: ["video", "typing", "input"].includes(files[idx].media) ? "inline" : "none"}}>
                 Autoplay wartet bis das Video vorbei ist: <input type="checkbox" checked={file.wait_until_finished} onChange={() => changeWaitUntilFinish(idx)} />
