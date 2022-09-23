@@ -20,6 +20,10 @@ const outputs = {
   "ALLE": "all",
   "All": "all",
   "all": "all",
+  "AI": "all",
+  "KI": "all",
+  "ki": "all",
+  "ai": "all",
   "Raum": 110 ,
   "raum": 110 ,
   "Raum": 110 ,
@@ -152,7 +156,7 @@ const AudioScreen = props => {
         setAutoPlay(false);
       }
       setCurrentFile(nextFile);
-      refs[nextFile].current.scrollIntoView({
+      refs[nextFile]?.current.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
       });
