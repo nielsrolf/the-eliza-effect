@@ -111,6 +111,9 @@ const AudioScreen = props => {
   
           // 👇️ your logic here
           console.log("autoplay before:", AutoPlay);
+          if(AutoPlay){
+            document.getElementById("track01").pause();
+          }
           setAutoPlay(!AutoPlay);
         }
       };
@@ -122,6 +125,32 @@ const AudioScreen = props => {
         document.removeEventListener('keydown', keyDownHandler);
       };
     }, [AutoPlay]);
+
+
+
+    useEffect(() => {
+      const keyDownHandler = event => {
+        console.log('User pressed: ', event.key);
+  
+        if (event.key === 'ArrowRight') {
+          console.log("yooo");
+          event.preventDefault();
+          handleNext();
+        }
+
+        if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          handlePrevious();
+        }
+      };
+  
+      document.addEventListener('keydown', keyDownHandler);
+  
+      // 👇️ clean up event listener
+      return () => {
+        document.removeEventListener('keydown', keyDownHandler);
+      };
+    }, [currentFile, files, refs]);
     
     useEffect(()=>{
       const AudioElement = document.getElementById('track01');
