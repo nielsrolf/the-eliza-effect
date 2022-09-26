@@ -30,7 +30,8 @@ const outputs = {
   "Raum": 110 ,
   "ROOM": 110 ,
   "RAUM": 110 ,
-  "room": 110 
+  "room": 110 ,
+  "extern": 110
 }
 
 const colors = {
@@ -112,7 +113,9 @@ const AudioScreen = props => {
           // 👇️ your logic here
           console.log("autoplay before:", AutoPlay);
           if(AutoPlay){
-            document.getElementById("track01").pause();
+            pausePlay();
+          }else{
+            startPlay();
           }
           setAutoPlay(!AutoPlay);
         }
@@ -156,7 +159,7 @@ const AudioScreen = props => {
       const AudioElement = document.getElementById('track01');
       
       function handleOutputChange(actor){
-        console.log("output changed to: ", outputs[actor]);
+        console.log("output changed to: ", outputs[actor], actor);
         if (!actor) return;
 
         if(outputs[actor]==="all") {
@@ -183,11 +186,16 @@ const AudioScreen = props => {
         }
       }
       
+      
       if(files[currentFile].src){
+        console.log("src is not null");
         handleOutputChange(files[currentFile].actor)
+        console.log("output changed");
         document.getElementById(files[currentFile]?.src).scrollIntoView({behavior: "smooth", block: "center"});
         if (!AutoPlay) return;
-        if(files[currentFile].media==='audio'){
+        console.log("autplay is on");
+        if(files[currentFile].media==='audio' || files[currentFile].media==='extern'){
+          console.log("123");
           AudioElement.play();
         }
       }
@@ -247,7 +255,11 @@ const AudioScreen = props => {
 
     function updateText(idx, text) {
       files[idx].text = text;
-      files[idx].src = "";
+      if(files[idx].media=="extern"){
+        files[idx].src = files[idx].text
+      }else{
+        files[idx].src = "";
+      }
       setStory({...story, medias: files});
     }
 
@@ -353,7 +365,12 @@ const AudioScreen = props => {
       document.getElementById("track01").pause();
       setAutoPlay(false);
     }
-    const autoplayButton = AutoPlay ? <MdPauseCircle onClick={pausePlay} size={100} /> : <MdPlayCircle onClick={() => setAutoPlay(true)} size={100} />;
+    function startPlay() {
+      console.log("u")
+      document.getElementById("track01").play();
+      setAutoPlay(true);
+    }
+    const autoplayButton = AutoPlay ? <MdPauseCircle onClick={pausePlay} size={100} /> : <MdPlayCircle onClick={startPlay} size={100} />;
 
   
     return <Container>

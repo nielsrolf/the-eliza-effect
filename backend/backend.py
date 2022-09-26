@@ -177,6 +177,9 @@ async def save(template: Story) -> Story:
     print("yo")
     parts = answer_audience_questions(parts)
     print("yo yo yo")
+    for part in parts:
+        if part.media == "extern":
+            part.src = part.text
     story_de = text_to_media(parts, target=target)
     story_de = Story(path=target + "/medias.json", medias=[i.__dict__ for i in story_de])
     return story_de
