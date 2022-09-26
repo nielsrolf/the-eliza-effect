@@ -34,28 +34,35 @@ const outputs = {
   "extern": 110
 }
 
+// #a65628
+// #f781bf
+// #984ea3
 const colors = {
-  "Luzia": "red",
-  "Marin": "green",
-  "Kriemhild": "blue",
-  "LUZIA": "red",
-  "MARIN": "green",
-  "KRIEMHILD": "blue",
-  "Alle": "black",
-  "ALL": "black",
-  "ALLE": "black",
-  "All": "black",
+  "luzia": "#e41a1c",
+  "marin": "#377eb8",
+  "kriemhild": "#4daf4a",
+  "alle": "black",
   "all": "black",
-  "AI": "black",
-  "KI": "black",
-  "ki": "black",
   "ai": "black",
-  "Raum": "yellow",
-  "raum": "yellow",
-  "ROOM": "yellow",
-  "RAUM": "yellow",
-  "room": "yellow",
-  "audience": "orange"
+  "ki": "black",
+  "raum": "#a65628",
+  "room": "#a65628",
+  "audience": "#ff7f00",
+  "": "rgba(0,0,0,0)",
+  "r": "red",
+  "g": "green",
+  "b": "blue",
+  "y": "yellow",
+  "o": "orange",
+  "w": "white",
+  "k": "black",
+  "red": "red",
+  "green": "green",
+  "blue": "blue",
+  "yellow": "yellow",
+  "orange": "orange",
+  "white": "white",
+  "black": "black"
 }
 
 
@@ -162,7 +169,7 @@ const AudioScreen = props => {
         console.log("output changed to: ", outputs[actor], actor);
         if (!actor) return;
 
-        if(outputs[actor]==="all") {
+        if(outputs[actor.toLowerCase()]==="all") {
           for(let i = 104; i <= 109; i++){
             cc(MAX_VOLUME, i, 9);
           }
@@ -179,7 +186,7 @@ const AudioScreen = props => {
         }
         for(let singleActor of actor.split("+")){
           // set selected channel to max volume
-          let channel = outputs[singleActor] || parseInt(singleActor);
+          let channel = outputs[singleActor.toLowerCase()] || parseInt(singleActor);
           cc(MAX_VOLUME, channel, 9);
           cc(MAX_VOLUME, channel + 1, 9);
           // setSelectedOutput(channel); 
@@ -250,6 +257,14 @@ const AudioScreen = props => {
     function updateActor(idx, actor) {
       files[idx].actor = actor;
       files[idx].src = "";
+      setStory({...story, medias: files});
+    }
+    function updateTitle(idx, title) {
+      files[idx].title = title;
+      setStory({...story, medias: files});
+    }
+    function updateColor(idx, color) {
+      files[idx].color = color;
       setStory({...story, medias: files});
     }
 
@@ -410,6 +425,13 @@ const AudioScreen = props => {
               justifyContent: "center",
               alignItems: "center"
             }}>
+              <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "space-between", width: "100%", height: "40px"}}>
+                <input type="text" name="title" value={file.title} onChange={(event) => updateTitle(idx, event.target.value)}
+                style={{backgroundColor: colors[file.color], width: "100%", fontSize: 20}} />
+                <div style={{width: "100px"}}>Color <input type="text" name="color" value={file.color} onChange={(event) => updateColor(idx, event.target.value)}
+                style={{backgroundColor: colors[file.color], width: "100%"}} />
+                </div>
+              </div>
               <div  style={{
                 display: "flex", 
                 flexDirection: "row",
@@ -424,7 +446,7 @@ const AudioScreen = props => {
 
                     
                     <input type="text" name="actor" value={file.actor} onChange={(event) => updateActor(idx, event.target.value)}
-                      style={{backgroundColor: colors[file.actor]}} />
+                      style={{backgroundColor: colors[file.actor.toLowerCase()]}} />
                     <div style={{display: ["video", "typing", "input"].includes(files[idx].media) ? "flex" : "none"}}>
                       Warten: <input type="checkbox" checked={file.wait_until_finished} onChange={() => changeWaitUntilFinish(idx)} />
                     </div>

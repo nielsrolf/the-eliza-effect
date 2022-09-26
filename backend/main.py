@@ -69,6 +69,9 @@ class Part:
     duration: Union[int, float] = 1
     wait_until_finished: bool = False
     speed: float = 100
+    title: str = ""
+    color: str = ""
+
     @staticmethod
     def parse(raw: str):
         if raw.startswith("PAUSE"):
