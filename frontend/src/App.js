@@ -37,9 +37,9 @@ function App() {
 
   return (<>
     <SelectPath setStory={setStory} available={available} setAvailable={setAvailable}/>
-    <SelectStory setStory={setStory} story={story}/>
+    {/* <SelectStory setStory={setStory} story={story}/> */}
     <AudioScreen story={story} setStory={setStory} midiOutput={MidiDevice.midiOutput}/>
-    <TextVersion story={story} />
+    {/* <TextVersion story={story} /> */}
     <BasicModal title='Settings'>          
       <SettingsScreen {...AudioDevice} {...MidiDevice} />
     </BasicModal>
