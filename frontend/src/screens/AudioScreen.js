@@ -3,7 +3,7 @@ import { Button, Slider } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useMIDIOutput } from "../hooks/useMidiOutput";
 import React from 'react';
-import {MdAudiotrack, MdVideoCameraBack, MdPanoramaFishEye, MdNoteAdd, MdOutlineDeleteForever, MdPlayCircle, MdPauseCircle} from 'react-icons/md';
+import {MdAudiotrack, MdVideoCameraBack, MdPanoramaFishEye, MdNoteAdd, MdOutlineDeleteForever, MdPlayCircle, MdPauseCircle, MdControlCamera} from 'react-icons/md';
 
 // 0 db
 const MAX_VOLUME = 104;
@@ -152,6 +152,13 @@ const AudioScreen = props => {
           event.preventDefault();
           handlePrevious();
         }
+
+        if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+          event.preventDefault();
+          console.log(refs[currentFile])
+          refs[currentFile]?.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
       };
   
       document.addEventListener('keydown', keyDownHandler);
@@ -391,6 +398,7 @@ const AudioScreen = props => {
     return <Container>
       <div  style={{position: 'absolut', bottom: 0, display: "flex", flexDirection: "row"}} >
         {autoplayButton}
+        
         {/* <p>Autoplay: 
         <input
           type="checkbox"
@@ -411,6 +419,7 @@ const AudioScreen = props => {
         </audio>
         <div style={{display: 'flex', width: '100%', justifyContent: 'center'}}>
           <Button children='<' size='small' onClick={handlePrevious} disabled={!currentFile} />
+          <MdControlCamera onClick={() => refs[currentFile]?.current?.scrollIntoView({behavior: 'smooth', block: 'start'})} size={100} />
           <Button children='>' onClick={handleNext} />
         </div>
       </div>
