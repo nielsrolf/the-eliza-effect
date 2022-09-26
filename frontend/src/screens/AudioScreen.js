@@ -430,9 +430,9 @@ const AudioScreen = props => {
                     </div>
                 </div>
 
-                <div style={{ flex: "0 0 100px", display: "flex", height: "100px", flexDirection: "column", justifyContent: "space-between", alignItems: "center"}}>
-                  <input type="text" name="media" value={file.media} onChange={(event) => updateMedia(idx, event.target.value)}/>
-                  <div style={{display: 'flex',width: "100px", flexDirection: 'column', height: "100%", justifyContent: "center", alignItems: "center", backgroundColor: "green" }}
+                <div style={{ flex: "0 0 100px", display: "flex", height: "100px", flexDirection: "column", justifyContent: "space-between", alignItems: "center", paddingLeft: "5px"}}>
+                  <input type="text" name="media" value={file.media} onChange={(event) => updateMedia(idx, event.target.value)} style={{width: "100%"}}/>
+                  <div style={{display: 'flex',width: "100%", flexDirection: 'column', height: "100%", justifyContent: "center", alignItems: "center", backgroundColor: "green" }}
                      onClick={()=>setCurrentFile(idx)} >
                     {mediaIcon(file)}
                   </div>
