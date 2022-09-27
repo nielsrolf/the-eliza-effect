@@ -3,7 +3,7 @@ import { Button, Slider } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useMIDIOutput } from "../hooks/useMidiOutput";
 import React from 'react';
-import {MdAudiotrack, MdVideoCameraBack, MdPanoramaFishEye, MdNoteAdd, MdOutlineDeleteForever, MdPlayCircle, MdPauseCircle, MdControlCamera} from 'react-icons/md';
+import {MdAudiotrack, MdVideoCameraBack, MdPanoramaFishEye, MdNoteAdd, MdOutlineDeleteForever, MdPlayCircle, MdPauseCircle, MdControlCamera, MdOutlineRepeatOne, MdOutlineRepeatOneOn} from 'react-icons/md';
 
 // 0 db
 const MAX_VOLUME = 104;
@@ -80,6 +80,7 @@ const AudioScreen = props => {
     const [ AutoPlay, setAutoPlay ] = useState(false)
     const currentFile = currentFile_ > files.length - 1 ? 0 : currentFile_;
     const [isLoading, setIsLoading] = useState(false);
+    const [loopAudio, setLoopAudio] = useState(false);
     // const [playbackRate, setPlaybackRate] = useState(100);
 
     console.log("autoPlay", AutoPlay)
@@ -246,6 +247,11 @@ const AudioScreen = props => {
     }
 
     function handleNext() {
+      if(loopAudio){
+        document.getElementById('track01').currentTime = 0;
+        document.getElementById('track01').play();
+        return;
+      }
       handleNextOffset(1);
     }
 
@@ -393,11 +399,13 @@ const AudioScreen = props => {
       setAutoPlay(true);
     }
     const autoplayButton = AutoPlay ? <MdPauseCircle onClick={pausePlay} size={100} /> : <MdPlayCircle onClick={startPlay} size={100} />;
+    const loopButton = loopAudio ? <MdOutlineRepeatOneOn onClick={() => setLoopAudio(false)} size={100} /> : <MdOutlineRepeatOne onClick={() => setLoopAudio(true)} size={100} />;
 
   
     return <Container>
       <div  style={{position: 'absolut', bottom: 0, display: "flex", flexDirection: "row"}} >
         {autoplayButton}
+        {loopButton}
         
         {/* <p>Autoplay: 
         <input
