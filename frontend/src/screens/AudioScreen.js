@@ -221,7 +221,7 @@ const AudioScreen = props => {
 
 
     function handleNextOffset(offset){
-      console.log("habndlenext", currentFile)
+      console.log("habndlenext", currentFile, offset)
       let nextFile = currentFile + offset;
       while(nextFile < files.length && files[nextFile].media==='none'){
         nextFile = nextFile + 1;
@@ -352,8 +352,8 @@ const AudioScreen = props => {
         
         setStory(result);
         if(files[currentFile].actor=="audience") {
-          // setCurrentFile(currentFile + 1);
-          handleNext();
+          setCurrentFile(currentFile + 1);
+          // handleNext();
         }
       } catch (err) {
         console.log(err)

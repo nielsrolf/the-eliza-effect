@@ -163,6 +163,32 @@ def answer_audience_questions(story_de):
     return story_de
 
 
+
+def answer_audience_questions(story_de):
+    # find the first unanswered audience question and answer it
+    i = 0
+    # find first audience question
+    while i < len(story_de):
+        part = story_de[i]
+        if part.actor.lower() == "audience":
+            break
+        i += 1
+    
+    convo = []
+    while i < len(story_de):
+        part = story_de[i]
+        if part.actor.lower() == "audience" and part.text != "" and part.text is not None and not (i + 1 < len(story_de) and story_de[i+1].actor == "AI"):
+            convo += [part]
+            convo_text = "\n".join([i.shortstr() for i in convo])
+            answer = generate_answer(convo_text)
+            story_de.insert(i + 1, answer)
+            return story_de
+        convo.append(part)
+        i += 1
+    return story_de
+
+
+
 @app.post("/save")
 async def save(template: Story) -> Story:
     """

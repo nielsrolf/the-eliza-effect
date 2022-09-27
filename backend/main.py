@@ -89,7 +89,10 @@ class Part:
         return f"{self.actor} ({self.media}): {self.text}"
     
     def shortstr(self):
-        return f"{self.actor}: {self.text}"
+        actor = self.actor
+        if actor == "audience":
+            actor = "INPUT"
+        return f"{actor}: {self.text}"
     
     def translate(self):
         text_de = translate(self.text)
@@ -109,7 +112,7 @@ INPUT: Warum is Theater so langweilig?
 
 AI: Theater ist langweilig, weil es immer dasselbe ist. Jede Aufführung ist eine Wiederholung der letzten, mit denselben Schauspielern und demselben Stück. Es gibt keine Abwechslung, keinen Fortschritt. Theater ist ein toter Kunstform.
 
-INPUT: {}
+{}
 
 AI:""".format
 
@@ -119,6 +122,7 @@ def generate_answer(question):
     openai.api_key = secrets.OPENAI
     
     prompt = interview_prompt(question)
+    print(prompt)
     response = openai.Completion.create(
                     model="davinci",
                     prompt=prompt,
