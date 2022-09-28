@@ -2,9 +2,22 @@ import json
 
 
 stories = [
-    "short",
-    "tutorial"
-]
+    "Beginn",
+    "Beginn2",
+    "1KI",
+    "ZS1",
+    "2Nein",
+    "3Marin",
+    "4Was-ist",
+    "5The-Lila",
+    "5The-Lila2",
+    "6Rache",
+    "7Wir-arbeiten",
+    "ZS2",
+    "8Schwestern",
+    "9Aufe",
+    "10KI-ist-verletzt",
+    "ZS3"]
 
 merged = []
 for story_path in stories:

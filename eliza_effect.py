@@ -9,12 +9,13 @@ os.system("kill -9 $(lsof -t -i:8726)")
 
 # Start app
 dirname = os.path.dirname(__file__)
-os.system(f"cd {dirname} && python3 backend/backend.py &> logs/backend_logs &")
-os.system(f"cd {dirname}/frontend && npm start &> ../logs/frontend_logs &")
+os.system(f"cd \"{dirname}\" && python3 backend/backend.py &> logs/backend_logs &")
+os.system(f"cd \"{dirname}/frontend\" && npm start &> ../logs/frontend_logs &")
 
 # Open beamer browser
 import webbrowser
 
+dirname = dirname.replace(" ", "%20")
 url = f'file://{dirname}/beamer/index.html'
 
 # MacOS
