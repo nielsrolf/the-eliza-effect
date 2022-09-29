@@ -288,6 +288,11 @@ const AudioScreen = props => {
       }else{
         files[idx].src = "";
       }
+      if(files[idx].media=="question"){
+        const part = {...files[idx], media: "video"};
+        playVideo(part);
+      }
+
       setStory({...story, medias: files});
     }
 
@@ -365,7 +370,7 @@ const AudioScreen = props => {
     const currentMedia = files.length > 0 ? files[currentFile] : {src: null, media: 'None'};
     const isAudio = currentMedia.media === 'audio' || currentMedia.media === 'extern';
     // video: one of ['video', 'typing', 'input']
-    const isVideo = currentMedia.media === 'video' || currentMedia.media === 'typing' || currentMedia.media === 'input';
+    const isVideo = currentMedia.media === 'video' || currentMedia.media === 'typing' || currentMedia.media === 'input' || currentMedia.media === 'question' || currentMedia.media === 'endless-typing';
 
     function mediaIcon(file, onClick) {
       switch(file.media) {
@@ -374,6 +379,10 @@ const AudioScreen = props => {
         case 'video':
           return <MdVideoCameraBack onClick={onClick} style={{margin: "auto"}} />
         case 'typing':
+          return <MdVideoCameraBack  onClick={onClick} style={{margin: "auto"}}/>
+        case 'question':
+          return <MdVideoCameraBack  onClick={onClick} style={{margin: "auto"}}/>
+        case 'endless-typing':
           return <MdVideoCameraBack  onClick={onClick} style={{margin: "auto"}}/>
         case 'input':
           return <MdVideoCameraBack onClick={onClick} style={{margin: "auto"}} />
