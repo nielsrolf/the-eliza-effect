@@ -101,10 +101,12 @@ const AudioScreen = props => {
       console.log("play", part);
       await fetch(`http://localhost:8726/play/`, requestOptions).then(res => {
         return res.json()}).then(part => {
-        if(part.wait_until_finished){
-          setTimeout(handleNext, 1000 * part.duration);
-        } else {
-          handleNext();
+        if(part.media!="question"){
+          if(part.wait_until_finished){
+            setTimeout(handleNext, 1000 * part.duration);
+          } else {
+            handleNext();
+          }
         }
       }).catch(err => {
         console.log(err);
@@ -288,9 +290,8 @@ const AudioScreen = props => {
       }else{
         files[idx].src = "";
       }
-      if(files[idx].media=="question"){
-        const part = {...files[idx], media: "video"};
-        playVideo(part);
+      if(files[idx].media=="question" && idx==currentFile){
+        playVideo(files[idx]);
       }
 
       setStory({...story, medias: files});
@@ -339,6 +340,10 @@ const AudioScreen = props => {
     }
     
     const saveStory = async () => {
+      if(files[currentFile].media==="question"){
+        console.log("question")
+        playVideo({media: "thinking"})
+      }
   
       try {
         setIsLoading(true);

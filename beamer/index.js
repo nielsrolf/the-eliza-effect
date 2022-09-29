@@ -14,6 +14,22 @@ function typingAnimate(slide) {
 }
 
 
+function think() {
+    // let text = document.getElementById("text").innerHTML;
+    // const randomChar = () => {
+    //     let char = String.fromCharCode(Math.floor(Math.random() * 26) + 97);
+    //     if(char === " ") {
+    //         return randomChar();
+    //     }
+    //     return char;
+    // }
+    // // replace char at random position
+    // const pos = Math.floor(Math.random() * text.length);
+    // text = text.substring(0, pos) + randomChar() + text.substring(pos + 1);
+    // document.getElementById("text").innerHTML = text;
+    document.getElementById("text").innerHTML = "think";
+}
+
 function showSlide(slides) {
     console.log("slides", slides);
     if(slides.length == 0) {
@@ -22,7 +38,7 @@ function showSlide(slides) {
     }
     let slide = slides.shift();
     console.log(slide);
-    if(slide.animation=="video"){
+    if(slide.animation=="video" || slide.animation=="question"){
         document.getElementById("text").innerHTML = slide.text;
     }
     if(slide.animation=="input") {
@@ -31,6 +47,10 @@ function showSlide(slides) {
     }
     if(slide.animation=="typing") {
         typingAnimate(slide);
+    }
+
+    if(slide.animation=="thinking") {
+        think();
     }
     setTimeout(() => showSlide(slides), slide.duration * 1000);
 }
@@ -49,11 +69,28 @@ function showNextThing() {
             showSlide(data.texts);
         }
     }).catch(function(err) {
+        document.getElementById("text").innerHTML = "Backend nicht verbunden, bitte Seite neu laden oder anderen Tab benutzen";
         console.log(err);
     });
 }
 
-function init() {
+async function waitForBackend() {
+    document.getElementById("text").innerHTML = "waiting for backend...";
+    while(true) {
+        try {
+            const response = await fetch(`http://localhost:8726/display/${beamerId}`);
+            if(response.ok) {
+                return;
+            }
+        } catch(err) {
+            console.log(err);
+        }
+        await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+}
+
+async function init() {
+    await waitForBackend();
     document.getElementById("text").innerHTML = "";
     showNextThing();
 }
