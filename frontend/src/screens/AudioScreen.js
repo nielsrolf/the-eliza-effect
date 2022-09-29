@@ -76,15 +76,19 @@ const AudioScreen = props => {
     const { cc } = useMIDIOutput(midiOutput);
     // const [ selectedOutput, setSelectedOutput ] = useState({ name: 'default' });
   
-    const [ currentFile_, setCurrentFile ] = useState(0);
+    const [ currentFile_, setCurrentFile_ ] = useState(0);
     const [ AutoPlay, setAutoPlay ] = useState(false)
     const currentFile = currentFile_ > files.length - 1 ? 0 : currentFile_;
     const [isLoading, setIsLoading] = useState(false);
     const [loopAudio, setLoopAudio] = useState(false);
     // const [playbackRate, setPlaybackRate] = useState(100);
 
-    console.log("autoPlay", AutoPlay)
     const refs = files.map(() => React.createRef());
+
+    function setCurrentFile(idx) {
+      console.log(refs[idx]?.current);
+      setCurrentFile_(idx);
+    }
 
 
     // const changeAudioSpeed = (targetSpeed) => {
@@ -138,6 +142,15 @@ const AudioScreen = props => {
         document.removeEventListener('keydown', keyDownHandler);
       };
     }, [AutoPlay]);
+
+    useEffect(() => {
+      // scroll into view the currently displayed file
+      refs[currentFile]?.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'center',
+      });
+    }, [currentFile]);
 
 
 
@@ -360,6 +373,11 @@ const AudioScreen = props => {
         setStory(result);
         if(files[currentFile].actor=="audience") {
           setCurrentFile(currentFile + 1);
+          // scroll to item
+          refs[currentFile + 1]?.current?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
           // handleNext();
         }
       } catch (err) {
@@ -405,13 +423,16 @@ const AudioScreen = props => {
       setAutoPlay(false);
     }
     function startPlay() {
-      console.log("u")
       document.getElementById("track01").play();
       setAutoPlay(true);
     }
     const autoplayButton = AutoPlay ? <MdPauseCircle onClick={pausePlay} size={100} /> : <MdPlayCircle onClick={startPlay} size={100} />;
     const loopButton = loopAudio ? <MdOutlineRepeatOneOn onClick={() => setLoopAudio(false)} size={100} /> : <MdOutlineRepeatOne onClick={() => setLoopAudio(true)} size={100} />;
 
+    const minIdx = Math.max(0, currentFile - 10);
+    const maxIdx = Math.min(files.length, currentFile + 40);
+
+    const showFiles = files.slice(minIdx, maxIdx);
   
     return <Container>
       <div  style={{position: 'absolut', bottom: 0, display: "flex", flexDirection: "row"}} >
@@ -445,71 +466,71 @@ const AudioScreen = props => {
     
 
       <FileListContainer>
-        {
-          files.map((file, idx) =>
-            <FileListItem id={file.src} isActive={idx === currentFile} key={idx} ref={refs[idx]} style={{
+      {
+        showFiles.map((file, idx) =>
+          <FileListItem id={file.src} isActive={idx + minIdx === currentFile} key={idx + minIdx} ref={refs[idx + minIdx]} style={{
+            display: "flex", 
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center"
+          }}>
+            <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "space-between", width: "100%", height: "40px"}}>
+              <input type="text" name="title" value={file.title} onChange={(event) => updateTitle(idx + minIdx, event.target.value)}
+              style={{backgroundColor: colors[file.color], width: "100%", fontSize: 20}} />
+              <div style={{width: "100px"}}>Color <input type="text" name="color" value={file.color} onChange={(event) => updateColor(idx + minIdx, event.target.value)}
+              style={{backgroundColor: colors[file.color], width: "100%"}} />
+              </div>
+            </div>
+            <div  style={{
               display: "flex", 
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center"
+              flexDirection: "row",
+              justifyContent: "space-between",
+              padding: "5px",
+              width: "100%",
+              border: "1px solid white",
             }}>
-              <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "space-between", width: "100%", height: "40px"}}>
-                <input type="text" name="title" value={file.title} onChange={(event) => updateTitle(idx, event.target.value)}
-                style={{backgroundColor: colors[file.color], width: "100%", fontSize: 20}} />
-                <div style={{width: "100px"}}>Color <input type="text" name="color" value={file.color} onChange={(event) => updateColor(idx, event.target.value)}
-                style={{backgroundColor: colors[file.color], width: "100%"}} />
-                </div>
-              </div>
-              <div  style={{
-                display: "flex", 
-                flexDirection: "row",
-                justifyContent: "space-between",
-                padding: "5px",
-                width: "100%",
-                border: "1px solid white",
-              }}>
-                <MdOutlineDeleteForever onClick={() => {deletePart(idx)}} size={50}/>
-                <div style={{display: 'flex', flexDirection: 'r', flex: "1 1 auto"}}>
+              <MdOutlineDeleteForever onClick={() => {deletePart(idx + minIdx)}} size={50}/>
+              <div style={{display: 'flex', flexDirection: 'r', flex: "1 1 auto"}}>
+                
+
                   
-
-                    
-                    <input type="text" name="actor" value={file.actor} onChange={(event) => updateActor(idx, event.target.value)}
-                      style={{backgroundColor: colors[file.actor.toLowerCase()]}} />
-                    <div style={{display: ["video", "typing", "input"].includes(files[idx].media) ? "flex" : "none"}}>
-                      Warten: <input type="checkbox" checked={file.wait_until_finished} onChange={() => changeWaitUntilFinish(idx)} />
-                    </div>
-                    
-                </div>
-
-                <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', flex: "4 1 auto"}}>
-
-                    <textarea name="src" value={file.text} style={{width: "100%", height: "100%"}} onChange={(event) => updateText(idx, event.target.value)}/>
-                    <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", width: "100%"}}>
-                        <div style={{display: (file.media=="extern" || file.media=="audio") ? "inline" : "none"}}>
-                        Speed: <Slider aria-label="Speed" value={file.speed ? file.speed : 100  } onChange={(event) => updateSpeed(idx, event.target.value)} min={50}  max={150}  style={{
-                          height: '15px',
-                          width: "100px",
-                        }} size="small"  valueLabelDisplay="auto"/>
-                        </div>
-                        <Button onClick={saveStory}>Update</Button>
-                        
-                        
-                    </div>
-                </div>
-
-                <div style={{ flex: "0 0 100px", display: "flex", height: "100px", flexDirection: "column", justifyContent: "space-between", alignItems: "center", paddingLeft: "5px"}}>
-                  <input type="text" name="media" value={file.media} onChange={(event) => updateMedia(idx, event.target.value)} style={{width: "100%"}}/>
-                  <div style={{display: 'flex',width: "100%", flexDirection: 'column', height: "100%", justifyContent: "center", alignItems: "center", backgroundColor: "green" }}
-                     onClick={()=>setCurrentFile(idx)} >
-                    {mediaIcon(file)}
+                  <input type="text" name="actor" value={file.actor} onChange={(event) => updateActor(idx + minIdx, event.target.value)}
+                    style={{backgroundColor: colors[file.actor.toLowerCase()]}} />
+                  <div style={{display: ["video", "typing", "input"].includes(files[idx + minIdx].media) ? "flex" : "none"}}>
+                    Warten: <input type="checkbox" checked={file.wait_until_finished} onChange={() => changeWaitUntilFinish(idx + minIdx)} />
                   </div>
+                  
+              </div>
+
+              <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', flex: "4 1 auto"}}>
+
+                  <textarea name="src" value={file.text} style={{width: "100%", height: "100%"}} onChange={(event) => updateText(idx + minIdx, event.target.value)}/>
+                  <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", width: "100%"}}>
+                      <div style={{display: (file.media=="extern" || file.media=="audio") ? "inline" : "none"}}>
+                      Speed: <Slider aria-label="Speed" value={file.speed ? file.speed : 100  } onChange={(event) => updateSpeed(idx + minIdx, event.target.value)} min={50}  max={150}  style={{
+                        height: '15px',
+                        width: "100px",
+                      }} size="small"  valueLabelDisplay="auto"/>
+                      </div>
+                      <Button onClick={saveStory}>Update</Button>
+                      
+                      
+                  </div>
+              </div>
+
+              <div style={{ flex: "0 0 100px", display: "flex", height: "100px", flexDirection: "column", justifyContent: "space-between", alignItems: "center", paddingLeft: "5px"}}>
+                <input type="text" name="media" value={file.media} onChange={(event) => updateMedia(idx + minIdx, event.target.value)} style={{width: "100%"}}/>
+                <div style={{display: 'flex',width: "100%", flexDirection: 'column', height: "100%", justifyContent: "center", alignItems: "center", backgroundColor: "green" }}
+                  onClick={()=>setCurrentFile(idx + minIdx)} >
+                  {mediaIcon(file)}
                 </div>
               </div>
-              <MdNoteAdd onClick={() => {insertEmptyMediaAfter(idx)}} size={32}/>
-            </FileListItem>
-            
-            
-          )
+            </div>
+            <MdNoteAdd onClick={() => {insertEmptyMediaAfter(idx + minIdx)}} size={32}/>
+          </FileListItem>
+          
+          
+        )
         }
       </FileListContainer>
     </Container>
