@@ -34,6 +34,11 @@ for part in merged:
     if part["media"] != "extern":
         part["src"] = None
 
+for part in merged:
+    if part["media"] != "extern":
+        part["src"] = ""
+
+
 import os
 os.makedirs("data//The-ELIZA-Effect", exist_ok=True)
 with open(f"data/The-ELIZA-Effect/medias.json", "w") as f:
