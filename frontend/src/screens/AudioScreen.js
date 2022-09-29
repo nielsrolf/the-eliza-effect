@@ -6,13 +6,13 @@ import React from 'react';
 import {MdAudiotrack, MdVideoCameraBack, MdPanoramaFishEye, MdNoteAdd, MdOutlineDeleteForever, MdPlayCircle, MdPauseCircle, MdControlCamera, MdOutlineRepeatOne, MdOutlineRepeatOneOn} from 'react-icons/md';
 
 // 0 db
-const MAX_VOLUME = 104;
+const MAX_VOLUME = 70;
 
 
 const outputs = {
-  "Luzia": 112,
-  "Marin": 114,
-  "Kriemhild": 116,
+  "luzia": 112,
+  "marin": 114,
+  "kriemhild": 116,
   "LUZIA": 112,
   "MARIN": 114,
   "KRIEMHILD": 116,
@@ -209,7 +209,9 @@ const AudioScreen = props => {
         }
         for(let singleActor of actor.split("+")){
           // set selected channel to max volume
+          console.log(singleActor.toLowerCase())
           let channel = outputs[singleActor.toLowerCase()] || parseInt(singleActor);
+          console.log("unmiute", channel);
           cc(MAX_VOLUME, channel, 9);
           cc(MAX_VOLUME, channel + 1, 9);
           // setSelectedOutput(channel); 
@@ -218,14 +220,10 @@ const AudioScreen = props => {
       
       
       if(files[currentFile].src){
-        console.log("src is not null");
         handleOutputChange(files[currentFile].actor)
-        console.log("output changed");
         document.getElementById(files[currentFile]?.src).scrollIntoView({behavior: "smooth", block: "center"});
         if (!AutoPlay) return;
-        console.log("autplay is on");
         if(files[currentFile].media==='audio' || files[currentFile].media==='extern'){
-          console.log("123");
           AudioElement.play();
         }
       }
@@ -284,7 +282,6 @@ const AudioScreen = props => {
 
     function updateActor(idx, actor) {
       files[idx].actor = actor;
-      files[idx].src = "";
       setStory({...story, medias: files});
     }
     function updateTitle(idx, title) {
@@ -555,5 +552,5 @@ const AudioScreen = props => {
     cursor: pointer;
     width: 100%;
     padding: 0.5em;
-    background-color: ${props => props.isActive ? '#202020' : '#353535'};
+    background-color: ${props => props.isActive ? 'rgb(120, 120, 120)' : '#353535'};
   `
