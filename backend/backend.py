@@ -207,13 +207,13 @@ async def save(template: Story) -> Story:
     Save a story and generate missing medias.
     """
     parts = [Part(**i) for i in template.medias]
-    # if template.path.endswith("medias.json"):
-    #     target = "/".join(template.path.split("/")[:-1])
-    # else:
-    #     target = ".".join(template.path.split(".")[:-1]) + "/generated"
+    if template.path.endswith("medias.json"):
+        target = "/".join(template.path.split("/")[:-1])
+    else:
+        target = ".".join(template.path.split(".")[:-1]) + "/generated"
     # day = dt.datetime.now().strftime("%Y-%m-%d")
     day = "AKTUELL"
-    target = f"data/{day}"
+    # target = f"data/{day}"
     os.makedirs(target, exist_ok=True)
     
     # if template.language != "de":
