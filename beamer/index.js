@@ -1,3 +1,5 @@
+const beamerId = Math.floor(Math.random() * 10000);
+
 function typingAnimate(slide) {
     let t = (slide.duration - 0.5 ) / slide.text.length;
     console.log("t", t)
@@ -36,7 +38,7 @@ function showSlide(slides) {
 
 function showNextThing() {
     
-    fetch("http://localhost:8726/display").then(function(response) {
+    fetch(`http://localhost:8726/display/${beamerId}`).then(function(response) {
         return response.json();
     }).then(function(data) {
         console.log("data", data);

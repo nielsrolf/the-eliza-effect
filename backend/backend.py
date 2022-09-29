@@ -82,9 +82,18 @@ class Video(BaseModel):
 
 
 display = []
+beamers = []
 default_text = ""
-@app.get("/display")
-async def displayBeamer():
+@app.get("/display/{beamer_id}")
+async def displayBeamer(beamer_id: int):
+    if beamer_id in beamers:
+        if beamer_id != beamers[-1]:
+            response = Video(text="Bitte diesen Tab schließen, da das Programm in einem anderen Tab offen ist.", media="video")
+            response.compute_duration()
+            print(response)
+            return response
+    else:
+        beamers.append(beamer_id)
     global display
     if len(display) > 0:
         response = display.pop(0)
