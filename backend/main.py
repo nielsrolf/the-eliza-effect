@@ -365,7 +365,7 @@ def text_to_media(parts, target=None):
         generate_all {bool} -- whether to generate all media
     """
     for i, part in tqdm(enumerate(parts)):
-        if part.src != "" and part.src is not None:
+        if part.src != "" and part.src is not None and os.path.exists(part.src):
             continue
         next_actor = parts[i + 1].actor if i < len(parts) - 1 else part.actor
         if part.actor == "BREAK":

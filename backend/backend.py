@@ -98,8 +98,8 @@ async def displayBeamer(beamer_id: int):
     global display
     if len(display) > 0:
         response = display.pop(0)
-        if response.media == "thinking":
-            display.insert(0, response)
+        if response.media == "thinking" and len(display) == 0: # we remain in this state until a new state exists
+            display.append(response)
     else:
         response = Video(text=default_text, media="video")
     response.compute_duration()
