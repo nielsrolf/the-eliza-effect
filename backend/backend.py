@@ -12,6 +12,7 @@ from typing import List, Dict, Tuple, Any
 from main import *
 from glob2 import glob
 import json
+import datetime as dt
 from fastapi.staticfiles import StaticFiles
 
 
@@ -206,10 +207,14 @@ async def save(template: Story) -> Story:
     Save a story and generate missing medias.
     """
     parts = [Part(**i) for i in template.medias]
-    if template.path.endswith("medias.json"):
-        target = "/".join(template.path.split("/")[:-1])
-    else:
-        target = ".".join(template.path.split(".")[:-1]) + "/generated"
+    # if template.path.endswith("medias.json"):
+    #     target = "/".join(template.path.split("/")[:-1])
+    # else:
+    #     target = ".".join(template.path.split(".")[:-1]) + "/generated"
+    # day = dt.datetime.now().strftime("%Y-%m-%d")
+    day = "AKTUELL"
+    target = f"data/{day}"
+    os.makedirs(target, exist_ok=True)
     
     # if template.language != "de":
     #     parts = translate_parts(parts)
@@ -220,7 +225,9 @@ async def save(template: Story) -> Story:
         if part.media == "extern":
             part.src = part.text
     story_de = text_to_media(parts, target=target)
-    story_de = Story(path=target + "/medias.json", medias=[i.__dict__ for i in story_de])
+    
+    print(target)
+    story_de = Story(path=target, medias=[i.__dict__ for i in story_de])
     return story_de
 
 
@@ -245,7 +252,7 @@ async def play(part: Video) -> Video:
 
 @app.get("/available")
 async def available():
-    files = glob(f"data/*.txt") + glob(f"data/**/medias.json")
+    files = glob(f"data/*.txt") + glob(f"data/**/*.json")
     return files
 
 
