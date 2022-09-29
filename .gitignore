@@ -137,3 +137,6 @@ frontend/.eslintcache
 
 .DS_Store
 **/.DS_Store
+
+backup/
+backup2/
