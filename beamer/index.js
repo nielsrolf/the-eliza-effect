@@ -26,7 +26,8 @@ function think() {
     }
     // replace char at random position
     const pos = Math.floor(Math.random() * text.length);
-    text = text.substring(0, pos) + randomChar() + text.substring(pos + 1);
+    //text = text.substring(0, pos) + randomChar() + text.substring(pos + 1);
+    text = text.substring(0, pos) + ' ' + text.substring(pos + 1);
     document.getElementById("text").innerHTML = text;
     // document.getElementById("text").innerHTML = "think";
     if(!stopThinking) {

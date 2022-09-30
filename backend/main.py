@@ -134,10 +134,15 @@ def generate_answer(question):
     text = postprocess_gpt_text(text)
     # text = text.split("\n")#.split("\n")[0]
     answer_audio = Part("", "GPT", "audio", text, True, "")
-    text = text.replace(".", ".t=7|")
+    texts = text.split(".")
+    new = "t=2|"
+    for i in texts:
+        t = len(i.split(" ")) / 2
+        new += i + f"t={t}|"
+    text = new
     if text.endswith("|"):
         text = text[:-1]
-    answer_txt = Part("", "GPT", "video", text, True, "", wait_until_finished=False)
+    answer_txt = Part("", "GPT", "typing", text, True, "", wait_until_finished=False)
     return answer_txt, answer_audio
 
 # def fill_template_gpt(parts: List[Part]) -> List[Part]:
