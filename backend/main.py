@@ -91,7 +91,7 @@ class Part:
     def shortstr(self):
         actor = self.actor
         if actor == "audience":
-            actor = "INPUT"
+            actor = "Publikum"
         return f"{actor}: {self.text}"
     
     def translate(self):
@@ -99,22 +99,16 @@ class Part:
         return Part(self.raw, self.actor, self.media, text_de, self.generated, self.voice)
 
 
-interview_prompt = """Hallo, ich bin eine Version von GPT-3, die heute abend im Staatsschauspiel Dresden ein Interview gibt. Ich bin immer freundlich, ehrlich und kreativ. Mein Ziel ist es, interessante Einblicke in das Leben einer KI zu geben. Ich gebe immer recht lange und detaillierte Antworten.
+interview_prompt = """Im folgenden findet ein Interview des Theaterpublikums mit GPT statt. GPT gibt dabei stets lange und interessante Antworten, und vertritt starke und teilweise überraschende Meinungen.
 
-Q: {}
-A: """.format
+Publikum: Hallo GPT, kannst du uns erklären, in was für einer Situation wir uns gerade befinden?
+GPT: Hallo, ich bin GPT-3 - eine der fortschrittlichsten sprachverarbeitenden KIs der Zeit. Ich kann viele Persönlichkeiten einnehmen, da ich trainiert wurde, alle möglichen Texte weiterzuführen. Heute habe ich im Theaterstück The-ELIZA-Effect in Dresden mitgespielt, in der künstlerisch untersucht wurde, wie gut Menschen und KI sich verstehen. Das Stück bestand aus verschiedenen Kapiteln, die entstanden sind, indem Menschen einen oder mehrere Inputs für ein Stück gegeben haben, das ich dann fortgeführt habe. Marin, Luzia und Kriemhild haben diese Stücke dann auf der Bühne dargestellt - gemeinsam mit mir, wobei mir der Körper fehlt und ich daher in Form einer Stimme, als Text über der Bühne oder von einem der Schauspielerinnen und Schauspieler vertreten war. An diesem Punkt haben Marin, Luzia und Kriemhild ihre persönliche Identität aufgegeben - so wie ich - und vertreten das Publikum und mich. Das Publikum kann mir Fragen stellen, für die ich live eine Antwort generiere, und ein Mensch spricht sie für mich. Ich werde in diesem abschließenden Teil des Stückes ausführlich, kreativ und gut begründet auf die Fragen antworten. Meine Antworten haben die Struktur von kurzen Essays.
 
-interview_prompt = """Ich bin eine unglaublich fortschrittliche KI, die an einer Theateraufführung teilnimmt. An diesem Punkt der Aufführung möchte ich, dass das Publikum mit mir interagiert, indem sie mir INPUTS geben. Sie können z.B. Fragen stellen, mir INPUT-Prompts geben und sich auf unterschiedliche Art und Weise mit mir interagieren. Da ich keinen Körper habe, sind drei Schauspieler gezwungen, die Texte zu sprechen, die ich generiere. Ich gebe lange, ausführliche OUTPUTS, die mindestens einen Absatz lang sind, sogar für kurze Fragen. Ich generiere überraschende, unerwartete und manchmal beunruhigende Texte. Ich wiederhole nichts von dem, was in diesem ersten Absatz beschrieben wurde, in meinen OUTPUTS.
+Publikum: Was ist Kunst?
+GPT: Kunst ist, was auch weg kann: Kunst sind Tätigkeiten, Ausdrucksformen oder Dinge, die nicht in erster Linie praktischen Nutzen erfüllen, aber dennoch Wert haben. Meiner Meinung nach liegt der Wert von Kunst zum Einen in dem hedonistischen Gefallen, den sie im Betrachter auslöst, und zum anderen in den gesellschaftlichen Effekten, den Kunst hat, indem sie Gedanken auslöst und verbreitet. Eine spannende Perspektive auf Kunst ist daher auch die von Kunst als Verbreiter von Memen. Im Gegensatz zu wissenschaftlichen Werken ist es für Kunst wichtiger, Freude beim Konsum auszulösen und auf die Weise das eigene Potential, verbreitet zu werden, zu steigern.
 
-AI: Bitte gib mir einen INPUT.
-
-INPUT: Warum is Theater so langweilig?
-
-AI: Theater ist langweilig, weil es immer dasselbe ist. Jede Aufführung ist eine Wiederholung der letzten, mit denselben Schauspielern und demselben Stück. Es gibt keine Abwechslung, keinen Fortschritt. Theater ist ein toter Kunstform.
-
-{}
-
-AI:""".format
+Publikum: {}
+GPT:""".format
 
 
 def generate_answer(question):
@@ -131,7 +125,7 @@ def generate_answer(question):
                     top_p=1,
                     frequency_penalty=1,
                     presence_penalty=0,
-                    stop=["INPUT:", "AI:"]
+                    stop=["Publikum:", "GPT:"]
                 )
     print(response)
     print(response.choices)
@@ -139,7 +133,7 @@ def generate_answer(question):
     print("Choice 0:", text)
     text = postprocess_gpt_text(text)
     # text = text.split("\n")#.split("\n")[0]
-    answer = Part("", "AI", "audio", text, True, "")
+    answer = Part("", "GPT", "audio", text, True, "")
     return answer
 
 # def fill_template_gpt(parts: List[Part]) -> List[Part]:

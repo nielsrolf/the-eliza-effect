@@ -25,6 +25,8 @@ const outputs = {
   "KI": "all",
   "ki": "all",
   "ai": "all",
+  "gpt": "all",
+  "GPT": "all",
   "Raum": 110 ,
   "raum": 110 ,
   "Raum": 110 ,
@@ -86,7 +88,6 @@ const AudioScreen = props => {
     const refs = files.map(() => React.createRef());
 
     function setCurrentFile(idx) {
-      console.log(refs[idx]?.current);
       setCurrentFile_(idx);
     }
 
@@ -119,13 +120,11 @@ const AudioScreen = props => {
 
     useEffect(() => {
       const keyDownHandler = event => {
-        console.log('User pressed: ', event.key);
   
         if (event.key === 'Escape') {
           event.preventDefault();
   
           // 👇️ your logic here
-          console.log("autoplay before:", AutoPlay);
           if(AutoPlay){
             pausePlay();
           }else{
@@ -156,10 +155,8 @@ const AudioScreen = props => {
 
     useEffect(() => {
       const keyDownHandler = event => {
-        console.log('User pressed: ', event.key);
   
         if (event.key === 'ArrowRight') {
-          console.log("yooo");
           event.preventDefault();
           handleNext();
         }
@@ -171,7 +168,6 @@ const AudioScreen = props => {
 
         if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
           event.preventDefault();
-          console.log(refs[currentFile])
           refs[currentFile]?.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
@@ -189,7 +185,6 @@ const AudioScreen = props => {
       const AudioElement = document.getElementById('track01');
       
       function handleOutputChange(actor){
-        console.log("output changed to: ", outputs[actor], actor);
         if (!actor) return;
 
         if(outputs[actor.toLowerCase()]==="all") {
@@ -209,7 +204,6 @@ const AudioScreen = props => {
         }
         for(let singleActor of actor.split("+")){
           // set selected channel to max volume
-          console.log(singleActor.toLowerCase())
           let channel = outputs[singleActor.toLowerCase()] || parseInt(singleActor);
           console.log("unmiute", channel);
           cc(MAX_VOLUME, channel, 9);
@@ -234,7 +228,6 @@ const AudioScreen = props => {
 
 
     function handleNextOffset(offset){
-      console.log("habndlenext", currentFile, offset)
       let nextFile = currentFile + offset;
       while(nextFile < files.length && files[nextFile].media==='none'){
         nextFile = nextFile + 1;
@@ -309,7 +302,6 @@ const AudioScreen = props => {
 
     function updateMedia(idx, media) {
       files[idx].media = media;
-      console.log(files[idx])
       if(media=="extern"){
         files[idx].src = files[idx].text
       }else{
@@ -325,7 +317,6 @@ const AudioScreen = props => {
 
     function insertEmptyMediaAfter(idx) {
       files.splice(idx + 1, 0, placeholder);
-      console.log(files);
       setStory({...story, medias: files});
       setCurrentFile(idx + 1);
     }
@@ -351,9 +342,11 @@ const AudioScreen = props => {
     
     const saveStory = async () => {
       if(files[currentFile].media==="question"){
-        console.log("question")
-        playVideo({media: "thinking"})
+        console.log("question");
+        await playVideo({media: "thinking", text: files[currentFile].text});
+        console.log("switching to thinking mode");
       }
+      
   
       try {
         setIsLoading(true);
@@ -362,6 +355,7 @@ const AudioScreen = props => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(props.story, null, 4)
         };
+        console.log("Asking to save story")
         const response = await fetch('http://localhost:8726/save', requestOptions);
   
         if (!response.ok) {
