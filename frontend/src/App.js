@@ -35,11 +35,12 @@ function App() {
   const [story, setStory] = useState({medias: [], path: "data/cowboy_dream/generated/medias.json"});
   const [available, setAvailable] = useState([]);
   const [ currentFile_, setCurrentFile_ ] = useState(0);
+  const [selectedStory, setSelectedStory] = useState('');
 
   return (<>
-    <SelectPath setStory={setStory} available={available} setAvailable={setAvailable} setCurrentFile_={setCurrentFile_}/>
+    <SelectPath setStory={setStory} available={available} setAvailable={setAvailable} setCurrentFile_={setCurrentFile_} selectedStory={selectedStory} setSelectedStory={setSelectedStory}/>
     {/* <SelectStory setStory={setStory} story={story}/> */}
-    <AudioScreen story={story} setStory={setStory} midiOutput={MidiDevice.midiOutput} currentFile_={currentFile_} setCurrentFile_={setCurrentFile_} />
+    <AudioScreen story={story} setStory={setStory} midiOutput={MidiDevice.midiOutput} currentFile_={currentFile_} setCurrentFile_={setCurrentFile_} setSelectedStory={setSelectedStory}/>
     {/* <TextVersion story={story} /> */}
     <BasicModal title='Settings'>          
       <SettingsScreen {...AudioDevice} {...MidiDevice} />

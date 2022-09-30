@@ -77,7 +77,7 @@ function wait(milliseconds){
 
 
 const AudioScreen = props => {
-    let { story, setStory, midiOutput, currentFile_, setCurrentFile_ } = props;
+    let { story, setStory, midiOutput, currentFile_, setCurrentFile_,  setSelectedStory } = props;
 
     const placeholder = { src: "", text: "", output: 0, media: "none", actor: "", raw: "" };
     let files = story.medias.length > 0 ? story.medias : [placeholder];
@@ -228,7 +228,7 @@ const AudioScreen = props => {
           AudioElement.play();
         }
       }
-      if(["video", "typing", "input"].includes(files[currentFile].media) && AutoPlay){
+      if(["video", "typing", "input", "thinking"].includes(files[currentFile].media) && AutoPlay){
         playVideo(files[currentFile])
       }
     },[currentFile, AutoPlay])
@@ -373,6 +373,7 @@ const AudioScreen = props => {
 
         
         setStory(result);
+        setSelectedStory(result.path);
         if(files[currentFile].actor=="audience") {
           setCurrentFile(currentFile + 1);
           // scroll to item

@@ -58,8 +58,11 @@ function showSlide(slides) {
     }
 
     if(slide.animation=="thinking") {
-        stopThinking = false;
-        think();
+        if(stopThinking) {
+            stopThinking = false;
+            document.getElementById("text").innerHTML = slide.text;
+            think();
+        }//if already thinking do nothing
     }
     setTimeout(() => showSlide(slides), slide.duration * 1000);
 }

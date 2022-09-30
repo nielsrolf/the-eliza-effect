@@ -3,13 +3,15 @@ import {useState, useEffect} from 'react';
 
 
 function SelectPath(props) {
-  const {setStory, available, setAvailable, setCurrentFile_} = props;
+  const {setStory, available, setAvailable, setCurrentFile_, selectedStory, setSelectedStory} = props;
   console.log(available)
 
   const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState('');
   
+  
   const setSelectedPath = async (event) => {
+    setSelectedStory(event.target.value);
     console.log(event);
     // setStory({...story, path: event.target.value});
     const requestOptions = {
@@ -65,7 +67,9 @@ function SelectPath(props) {
     <form>
       {
         available.map((file) =>
-            <Button value={file} onClick={setSelectedPath} key={file}>{file.split("data/")[1].split(".")[0]}</Button>
+            <Button value={file} onClick={setSelectedPath} key={file} style={{
+              "backgroundColor":  file === selectedStory ? "rgb(120, 120, 120)" : "rgb(60, 60, 60)",
+            }}>{file.split("data/")[1].split(".")[0]}</Button>
         )
     }
     </form>
