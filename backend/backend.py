@@ -14,6 +14,7 @@ from glob2 import glob
 import json
 import datetime as dt
 from fastapi.staticfiles import StaticFiles
+import random
 
 
 
@@ -207,25 +208,22 @@ async def save(template: Story) -> Story:
     Save a story and generate missing medias.
     """
     parts = [Part(**i) for i in template.medias]
-    # if template.path.endswith("medias.json"):
-    #     target = "/".join(template.path.split("/")[:-1])
-    # else:
-    #     target = ".".join(template.path.split(".")[:-1]) + "/generated"
+    if template.path.endswith("medias.json"):
+        target = "/".join(template.path.split("/")[:-1])
+    else:
+        target = ".".join(template.path.split(".")[:-1]) + "/generated"
     # day = dt.datetime.now().strftime("%Y-%m-%d")
-    day = "AKTUELL"
-    target = f"data/{day}"
+    # day = "AKTUELL"
+    # target = f"data/{day}"
     os.makedirs(target, exist_ok=True)
     
     # if template.language != "de":
     #     parts = translate_parts(parts)
-    print("yo")
     parts = answer_audience_questions(parts)
-    print("yo yo yo")
     for part in parts:
         if part.media == "extern":
             part.src = part.text
     story_de = text_to_media(parts, target=target)
-    
     print(target)
     story_de = Story(path=target, medias=[i.__dict__ for i in story_de])
     return story_de
@@ -244,6 +242,8 @@ async def play(part: Video) -> Video:
     # os.system(f"ffplay -fs -autoexit '{video.path}'")
     global display
     global default_text
+    # if part.media == "thinking":
+    #     breakpoint()
     part.compute_duration()
     default_text = part.texts[-1]["text"]
     display += [part]
