@@ -133,8 +133,9 @@ def generate_answer(question):
     print("Choice 0:", text)
     text = postprocess_gpt_text(text)
     # text = text.split("\n")#.split("\n")[0]
-    answer = Part("", "GPT", "audio", text, True, "")
-    return answer
+    answer_audio = Part("", "GPT", "audio", text, True, "")
+    answer_txt = Part("", "GPT", "video", text, True, "", wait_until_finished=False)
+    return answer_txt, answer_audio
 
 # def fill_template_gpt(parts: List[Part]) -> List[Part]:
 #     """Replace <generate> with generated text from GPT"""

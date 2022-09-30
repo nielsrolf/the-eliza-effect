@@ -68,6 +68,13 @@ const colors = {
 }
 
 
+function wait(milliseconds){
+  return new Promise(resolve => {
+      setTimeout(resolve, milliseconds);
+  });
+}
+
+
 
 const AudioScreen = props => {
     let { story, setStory, midiOutput } = props;
@@ -106,7 +113,7 @@ const AudioScreen = props => {
       console.log("play", part);
       await fetch(`http://localhost:8726/play/`, requestOptions).then(res => {
         return res.json()}).then(part => {
-        if(part.media!="question"){
+        if(part.media!="question" && part.media!="thinking"){
           if(part.wait_until_finished){
             setTimeout(handleNext, 1000 * part.duration);
           } else {
@@ -346,7 +353,7 @@ const AudioScreen = props => {
         await playVideo({media: "thinking", text: files[currentFile].text});
         console.log("switching to thinking mode");
       }
-      
+     await wait(200);
   
       try {
         setIsLoading(true);
@@ -363,6 +370,7 @@ const AudioScreen = props => {
         }
   
         const result = await response.json();
+
         
         setStory(result);
         if(files[currentFile].actor=="audience") {
