@@ -77,7 +77,7 @@ function wait(milliseconds){
 
 
 const AudioScreen = props => {
-    let { story, setStory, midiOutput } = props;
+    let { story, setStory, midiOutput, currentFile_, setCurrentFile_ } = props;
 
     const placeholder = { src: "", text: "", output: 0, media: "none", actor: "", raw: "" };
     let files = story.medias.length > 0 ? story.medias : [placeholder];
@@ -85,7 +85,7 @@ const AudioScreen = props => {
     const { cc } = useMIDIOutput(midiOutput);
     // const [ selectedOutput, setSelectedOutput ] = useState({ name: 'default' });
   
-    const [ currentFile_, setCurrentFile_ ] = useState(0);
+    
     const [ AutoPlay, setAutoPlay ] = useState(false)
     const currentFile = currentFile_ > files.length - 1 ? 0 : currentFile_;
     const [isLoading, setIsLoading] = useState(false);
@@ -425,7 +425,7 @@ const AudioScreen = props => {
       setAutoPlay(false);
     }
     function startPlay() {
-      document.getElementById("track01").play();
+      document.getElementById("track01")?.play();
       setAutoPlay(true);
     }
     const autoplayButton = AutoPlay ? <MdPauseCircle onClick={pausePlay} size={100} /> : <MdPlayCircle onClick={startPlay} size={100} />;

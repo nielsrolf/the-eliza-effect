@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react';
 
 
 function SelectPath(props) {
-  const {setStory, available, setAvailable} = props;
+  const {setStory, available, setAvailable, setCurrentFile_} = props;
   console.log(available)
 
   const [isLoading, setIsLoading] = useState(false);
@@ -28,6 +28,7 @@ function SelectPath(props) {
     console.log('result is: ', JSON.stringify(result, null, 4));
 
     setStory(result);
+    setCurrentFile_(0);
   }
 
   useEffect(() => {

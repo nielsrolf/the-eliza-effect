@@ -161,19 +161,20 @@ async def generate(template: Story) -> Story:
     return story_de
 
 
-def answer_audience_questions(story_de):
-    i = 0
-    while i < len(story_de):
-        part = story_de[i]
-        if part.actor.lower() == "audience" and part.text != "" and part.text is not None:
-            # if the next part is the answer skip
-            if len(story_de) > i + 1 and story_de[i+1].actor == "GPT":
-                i += 1
-                continue
-            answer = generate_answer(part.text)
-            story_de.insert(i + 1, answer)
-        i += 1
-    return story_de
+# def answer_audience_questions(story_de):
+#     i = 0
+#     while i < len(story_de):
+#         part = story_de[i]
+#         if part.actor.lower() == "audience" and part.text != "" and part.text is not None:
+#             # if the next part is the answer skip
+#             if len(story_de) > i + 1 and story_de[i+1].actor == "GPT":
+#                 i += 1
+#                 continue
+#             answer_txt, answer_audio = generate_answer(part.text)
+#             story_de.insert(i + 1, answer_txt)
+#             story_de.insert(i + 2, answer_audio)
+#         i += 1
+#     return story_de
 
 
 
@@ -193,8 +194,9 @@ def answer_audience_questions(story_de):
         if part.actor.lower() == "audience" and part.text != "" and part.text is not None and not (i + 1 < len(story_de) and story_de[i+1].actor == "AI"):
             convo += [part]
             convo_text = "\n".join([i.shortstr() for i in convo])
-            answer = generate_answer(convo_text)
-            story_de.insert(i + 1, answer)
+            answer_txt, answer_audio = generate_answer(convo_text)
+            story_de.insert(i + 1, answer_txt)
+            story_de.insert(i + 2, answer_audio)
             return story_de
         convo.append(part)
         i += 1
@@ -212,6 +214,8 @@ async def save(template: Story) -> Story:
         target = "/".join(template.path.split("/")[:-1])
     else:
         target = ".".join(template.path.split(".")[:-1]) + "/generated"
+    if target.startswith("/generated"):
+        target = "data/tmp"
     # day = dt.datetime.now().strftime("%Y-%m-%d")
     # day = "AKTUELL"
     # target = f"data/{day}"
@@ -225,6 +229,7 @@ async def save(template: Story) -> Story:
             part.src = part.text
     story_de = text_to_media(parts, target=target)
     print(target)
+    
     story_de = Story(path=target, medias=[i.__dict__ for i in story_de])
     return story_de
 

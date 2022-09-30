@@ -134,6 +134,7 @@ def generate_answer(question):
     text = postprocess_gpt_text(text)
     # text = text.split("\n")#.split("\n")[0]
     answer_audio = Part("", "GPT", "audio", text, True, "")
+    text = text.replace(".", ".t=7|")
     answer_txt = Part("", "GPT", "video", text, True, "", wait_until_finished=False)
     return answer_txt, answer_audio
 

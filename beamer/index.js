@@ -13,30 +13,38 @@ function typingAnimate(slide) {
     }, slide.duration * 1000)
 }
 
+let stopThinking = true;
 
 function think() {
-    // let text = document.getElementById("text").innerHTML;
-    // const randomChar = () => {
-    //     let char = String.fromCharCode(Math.floor(Math.random() * 26) + 97);
-    //     if(char === " ") {
-    //         return randomChar();
-    //     }
-    //     return char;
-    // }
-    // // replace char at random position
-    // const pos = Math.floor(Math.random() * text.length);
-    // text = text.substring(0, pos) + randomChar() + text.substring(pos + 1);
-    // document.getElementById("text").innerHTML = text;
-    document.getElementById("text").innerHTML = "think";
+    let text = document.getElementById("text").innerHTML;
+    const randomChar = () => {
+        let char = String.fromCharCode(Math.floor(Math.random() * 26) + 97);
+        if(char === " ") {
+            return randomChar();
+        }
+        return char;
+    }
+    // replace char at random position
+    const pos = Math.floor(Math.random() * text.length);
+    text = text.substring(0, pos) + randomChar() + text.substring(pos + 1);
+    document.getElementById("text").innerHTML = text;
+    // document.getElementById("text").innerHTML = "think";
+    if(!stopThinking) {
+        setTimeout(think, 100);
+    }
 }
 
 function showSlide(slides) {
     console.log("slides", slides);
+    
     if(slides.length == 0) {
         showNextThing();
         return;
     }
     let slide = slides.shift();
+    if(slide.animation!="thinking") {
+        stopThinking=true;
+    }
     console.log(slide);
     if(slide.animation=="video" || slide.animation=="question"){
         document.getElementById("text").innerHTML = slide.text;
@@ -50,6 +58,7 @@ function showSlide(slides) {
     }
 
     if(slide.animation=="thinking") {
+        stopThinking = false;
         think();
     }
     setTimeout(() => showSlide(slides), slide.duration * 1000);

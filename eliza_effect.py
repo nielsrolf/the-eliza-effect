@@ -18,8 +18,8 @@ system("kill -9 $(lsof -t -i:8726)")
 dirname = os.path.dirname(__file__)
 t = str(int(time.time()))
 system(f"cd \"{dirname}\" && git pull")
-system(f"cd \"{dirname}\" && python3 backend/backend.py &> logs/{t}_backend &")
-system(f"cd \"{dirname}/frontend\" && npm start &> ../logs/{t}_frontend &")
+# system(f"cd \"{dirname}\" && python3 backend/backend.py &> logs/{t}_backend &")
+# system(f"cd \"{dirname}/frontend\" && npm start &> ../logs/{t}_frontend &")
 
 # Open beamer browser
 import webbrowser
