@@ -1,5 +1,0 @@
-Context (audio): Dialogue. Kriemhild and Luzia are sitting in the desert. They have been camping out for weeks, and they have started having strange dreams. They don't know yet why it is happening , but it has started giving them nightmares about cowboys. This is what they discuss. In the middle, they start to fight. You'll never believe at the end why this is happening.
-Luzia (audio): Kriemhild? Can you hear me?
-Kriemhild (audio): Yes, I can hear you. What's wrong?
-Stage directions (video): This will be rendered as a video and played outside the browser.
-Marin (audio): The next part of the story will be completed by GPT-3
