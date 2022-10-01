@@ -99,7 +99,7 @@ async def displayBeamer(beamer_id: int):
     global display
     if len(display) > 0:
         response = display.pop(0)
-        if response.media == "thinking" and len(display) == 0: # we remain in this state until a new state exists
+        if (response.media == "thinking" or response.media == "endless-typing") and len(display) == 0: # we remain in this state until a new state exists
             display.append(response)
     else:
         response = Video(text=default_text, media="video")
@@ -212,9 +212,12 @@ async def save(template: Story) -> Story:
     parts = [Part(**i) for i in template.medias]
     if template.path.endswith("medias.json"):
         target = "/".join(template.path.split("/")[:-1])
+    elif target.path.endswith("/generated"):
+        target = template.path
     else:
         target = ".".join(template.path.split(".")[:-1]) + "/generated"
     if target.startswith("/generated"):
+        breakpoint()
         target = "data/tmp"
     # day = dt.datetime.now().strftime("%Y-%m-%d")
     # day = "AKTUELL"

@@ -228,7 +228,7 @@ const AudioScreen = props => {
           AudioElement.play();
         }
       }
-      if(["video", "typing", "input", "thinking"].includes(files[currentFile].media) && AutoPlay){
+      if(["video", "typing", "input", "thinking", "endless-typing"].includes(files[currentFile].media) && AutoPlay){
         playVideo(files[currentFile])
       }
     },[currentFile, AutoPlay])

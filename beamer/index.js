@@ -14,6 +14,7 @@ function typingAnimate(slide) {
 }
 
 let stopThinking = true;
+let stopTyping = true;
 
 function think() {
     let text = document.getElementById("text").innerHTML;
@@ -33,6 +34,10 @@ function think() {
     if(!stopThinking) {
         setTimeout(think, 100);
     }
+}
+
+function typeEndless(slide) {
+    document.getElementById("text").innerHTML = slide.text;
 }
 
 function showSlide(slides) {
@@ -63,6 +68,14 @@ function showSlide(slides) {
             stopThinking = false;
             document.getElementById("text").innerHTML = slide.text;
             think();
+        }//if already thinking do nothing
+    }
+
+    if(slide.animation=="endless-typing") {
+        if(stopTyping) {
+            stopTyping = false;
+            document.getElementById("text").innerHTML = slide.text;
+            typeEndless(slide);
         }//if already thinking do nothing
     }
     setTimeout(() => showSlide(slides), slide.duration * 1000);
