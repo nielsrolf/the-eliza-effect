@@ -8,7 +8,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import dataclasses
-from typing import List, Dict, Tuple, Any
+from typing import List, Dict, Tuple, Any, Optional
 from main import *
 from glob2 import glob
 import json
@@ -32,6 +32,7 @@ class Story(BaseModel):
     path: str
     language: str = "en"
     medias: List[Dict] = None
+    answerIdx: Optional[int] = None
 
 from typing import Optional, Union
 class Video(BaseModel):
@@ -178,7 +179,7 @@ async def generate(template: Story) -> Story:
 
 
 
-def answer_audience_questions(story_de):
+def answer_audience_questions(story_de, answerIdx):
     # find the first unanswered audience question and answer it
     i = 0
     # find first audience question
@@ -191,14 +192,16 @@ def answer_audience_questions(story_de):
     convo = []
     while i < len(story_de):
         part = story_de[i]
-        if part.actor.lower() == "audience" and part.text != "" and part.text is not None and not (i + 1 < len(story_de) and story_de[i+1].actor == "AI"):
+        if part.actor.lower() == "audience" and part.text != "" and part.text is not None and not (i + 1 < len(story_de) and story_de[i+1].actor == "GPT") and i == answerIdx:
             convo += [part]
+            convo = convo[-5:]
             convo_text = "\n".join([i.shortstr() for i in convo])
             answer_txt, answer_audio = generate_answer(convo_text)
             story_de.insert(i + 1, answer_txt)
             story_de.insert(i + 2, answer_audio)
             return story_de
-        convo.append(part)
+        if part.media != "typing":
+            convo.append(part)
         i += 1
     return story_de
 
@@ -214,10 +217,12 @@ async def save(template: Story) -> Story:
         target = "/".join(template.path.split("/")[:-1])
     elif template.path.endswith("/generated"):
         target = template.path
+    elif os.path.exists(template.path) and os.path.isdir(template.path):
+        target = template.path
     else:
         target = ".".join(template.path.split(".")[:-1]) + "/generated"
     if target.startswith("/generated"):
-        breakpoint()
+        print(target, template.path)
         target = "data/tmp"
     # day = dt.datetime.now().strftime("%Y-%m-%d")
     # day = "AKTUELL"
@@ -226,7 +231,7 @@ async def save(template: Story) -> Story:
     
     # if template.language != "de":
     #     parts = translate_parts(parts)
-    parts = answer_audience_questions(parts)
+    parts = answer_audience_questions(parts, template.answerIdx)
     for part in parts:
         if part.media == "extern":
             part.src = part.text

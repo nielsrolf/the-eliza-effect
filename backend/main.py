@@ -71,6 +71,7 @@ class Part:
     speed: float = 100
     title: str = ""
     color: str = ""
+    needsAnswer: bool = False
 
     @staticmethod
     def parse(raw: str):

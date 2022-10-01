@@ -369,7 +369,7 @@ const AudioScreen = props => {
         const requestOptions = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(props.story, null, 4)
+          body: JSON.stringify({...story, medias: files, answerIdx: currentFile}, null, 4)
         };
         console.log("Asking to save story")
         const response = await fetch('http://localhost:8726/save', requestOptions);
@@ -383,6 +383,7 @@ const AudioScreen = props => {
         
         setStory(result);
         setSelectedStory(result.path);
+
         if(files[currentFile].actor=="audience") {
           setCurrentFile(currentFile + 1);
           // scroll to item
@@ -393,6 +394,7 @@ const AudioScreen = props => {
           // handleNext();
         }
       } catch (err) {
+
         console.log(err)
       } finally {
         setIsLoading(false);
