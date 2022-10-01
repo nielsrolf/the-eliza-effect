@@ -107,6 +107,7 @@ function showSlide(slides) {
         typingAnimate(slide);
     }
     if(slide.animation=="typing") {
+        document.getElementById("text").innerHTML = "";
         typingAnimate(slide);
     }
 
