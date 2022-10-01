@@ -134,7 +134,7 @@ def generate_answer(question):
     print("Choice 0:", text)
     text = postprocess_gpt_text(text)
     # text = text.split("\n")#.split("\n")[0]
-    answer_audio = Part("", "GPT", "audio", text, True, "")
+    answer_audio = Part("", "GPT", "audio", text, True, "", speed=80)
     texts = text.split(".")
     new = "t=2|"
     for i in texts:
