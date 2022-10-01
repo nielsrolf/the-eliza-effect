@@ -113,7 +113,7 @@ const AudioScreen = props => {
       console.log("play", part);
       await fetch(`http://localhost:8726/play/`, requestOptions).then(res => {
         return res.json()}).then(part => {
-        if(part.media!="question" && part.media!="thinking"){
+        if(part.media!="question" && part.media!="thinking" && part.media!="endless-typing" && part.actor != "clearScreen"){
           if(part.wait_until_finished){
             setTimeout(handleNext, 1000 * part.duration);
           } else {
@@ -260,6 +260,11 @@ const AudioScreen = props => {
     }
 
     function handleNext() {
+      if(files[currentFile].media==='endless-typing' || files[currentFile].media==='thinking'){
+        // clear screen if we were in thinking or endless typing mode
+        playVideo({media: "video", duration: 0.1, wait_until_finished: false, text: "", actor: "clearScreen"});
+      }
+
       if(loopAudio){
         document.getElementById('track01').currentTime = 0;
         document.getElementById('track01').play();

@@ -17,6 +17,9 @@ let stopThinking = true;
 let stopTyping = true;
 
 function think() {
+    if(stopThinking) {
+        return
+    }
     let text = document.getElementById("text").innerHTML;
     const randomChar = () => {
         let char = String.fromCharCode(Math.floor(Math.random() * 26) + 97);
@@ -37,11 +40,16 @@ function think() {
 }
 
 function typeEndless(slide) {
+    if(stopTyping) {
+        return
+    }
+    console.log(slide.text);
     document.getElementById("text").innerHTML = slide.text;
+    setTimeout(() => typeEndless(slide), 100);
 }
 
 function showSlide(slides) {
-    console.log("slides", slides);
+    // console.log("slides", slides);
     
     if(slides.length == 0) {
         showNextThing();
@@ -51,7 +59,9 @@ function showSlide(slides) {
     if(slide.animation!="thinking") {
         stopThinking=true;
     }
-    console.log(slide);
+    if(slide.animation!="endless-typing") {
+        stopTyping=true;
+    }
     if(slide.animation=="video" || slide.animation=="question"){
         document.getElementById("text").innerHTML = slide.text;
     }

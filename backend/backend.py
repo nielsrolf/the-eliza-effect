@@ -212,7 +212,7 @@ async def save(template: Story) -> Story:
     parts = [Part(**i) for i in template.medias]
     if template.path.endswith("medias.json"):
         target = "/".join(template.path.split("/")[:-1])
-    elif target.path.endswith("/generated"):
+    elif template.path.endswith("/generated"):
         target = template.path
     else:
         target = ".".join(template.path.split(".")[:-1]) + "/generated"
