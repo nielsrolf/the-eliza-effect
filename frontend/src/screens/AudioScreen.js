@@ -196,14 +196,11 @@ const AudioScreen = props => {
       const AudioElement = document.getElementById('track01');
       
       function handleOutputChange(actor){
+        console.log("handleoutputchange", actor)
         if (!actor) return;
 
         if(outputs[actor.toLowerCase()]==="all") {
-          for(let i = 104; i <= 109; i++){
-            cc(MAX_VOLUME, i, 9);
-          }
-          // setSelectedOutput(channel);
-          return
+          actor="luzia+marin+kriemhild"
         }
         // mute all channels
         for(let i = 0; i <= 127; i++){
