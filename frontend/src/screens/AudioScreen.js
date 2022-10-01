@@ -3,7 +3,7 @@ import { Button, Slider } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useMIDIOutput } from "../hooks/useMidiOutput";
 import React from 'react';
-import {MdAudiotrack, MdVideoCameraBack, MdPanoramaFishEye, MdNoteAdd, MdOutlineDeleteForever, MdPlayCircle, MdPauseCircle, MdControlCamera, MdOutlineRepeatOne, MdOutlineRepeatOneOn} from 'react-icons/md';
+import {MdAudiotrack, MdVideoCameraBack, MdStopScreenShare, MdPanoramaFishEye, MdNoteAdd, MdOutlineDeleteForever, MdPlayCircle, MdPauseCircle, MdControlCamera, MdOutlineRepeatOne, MdOutlineRepeatOneOn} from 'react-icons/md';
 
 // 0 db
 const MAX_VOLUME = 70;
@@ -123,6 +123,10 @@ const AudioScreen = props => {
       }).catch(err => {
         console.log(err);
       });
+    }
+
+    function clearScreen() {
+      playVideo({media: "video", duration: 0.1, wait_until_finished: false, text: "", actor: "clearScreen"});
     }
 
     useEffect(() => {
@@ -262,7 +266,7 @@ const AudioScreen = props => {
     function handleNext() {
       if(files[currentFile].media==='endless-typing' || files[currentFile].media==='thinking'){
         // clear screen if we were in thinking or endless typing mode
-        playVideo({media: "video", duration: 0.1, wait_until_finished: false, text: "", actor: "clearScreen"});
+        clearScreen();
       }
 
       if(loopAudio){
@@ -446,6 +450,7 @@ const AudioScreen = props => {
       <div  style={{position: 'absolut', bottom: 0, display: "flex", flexDirection: "row"}} >
         {autoplayButton}
         {loopButton}
+        <MdStopScreenShare onClick={clearScreen} size={100} />
         
         {/* <p>Autoplay: 
         <input

@@ -39,13 +39,50 @@ function think() {
     }
 }
 
-function typeEndless(slide) {
-    if(stopTyping) {
-        return
+// function typeEndless(slide) {
+//     if(stopTyping) {
+//         return
+//     }
+//     console.log(slide.text);
+
+//     document.getElementById("text").innerHTML = slide.text;
+//     setTimeout(() => typeEndless(slide), 100);
+// }
+
+async function typeSentence(sentence) {
+    document.getElementById("text").innerHTML = "";
+    let t = 0.01;
+    for(let i=0; i<sentence.length; i+=1) {
+        setTimeout(() => {
+            if(stopTyping) {
+                return;
+            }
+            document.getElementById("text").innerHTML += sentence[i];
+        }, i * t * 1000)
     }
-    console.log(slide.text);
-    document.getElementById("text").innerHTML = slide.text;
-    setTimeout(() => typeEndless(slide), 100);
+    return new Promise(resolve => {
+        setTimeout(() => {
+            if(stopTyping) {
+                return;
+            }
+            document.getElementById("text").innerHTML += ".";
+            resolve(true);
+        }, sentence.length * t * 1000)
+    })
+}
+
+async function typeEndless(slide) {
+    while(!stopTyping) {
+        for(let sentence of slide.text.split(".")) {
+            console.log(sentence)
+            let done = await typeSentence(sentence);
+            console.log("done", stopTyping)
+
+            if(stopTyping) {
+                return;
+            }
+        }
+    }
 }
 
 function showSlide(slides) {
@@ -84,7 +121,6 @@ function showSlide(slides) {
     if(slide.animation=="endless-typing") {
         if(stopTyping) {
             stopTyping = false;
-            document.getElementById("text").innerHTML = slide.text;
             typeEndless(slide);
         }//if already thinking do nothing
     }
@@ -97,7 +133,7 @@ function showNextThing() {
     fetch(`http://localhost:8726/display/${beamerId}`).then(function(response) {
         return response.json();
     }).then(function(data) {
-        console.log("data", data);
+        // console.log("data", data);
         if(data.texts.length == 0) {
             console.log("nothibg")
             setTimeout(showNextThing, 100)
