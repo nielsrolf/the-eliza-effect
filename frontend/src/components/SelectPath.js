@@ -1,9 +1,14 @@
 import { Button } from "@mui/material";
 import {useState, useEffect} from 'react';
 
+async function wait(ms) {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms);
+  });
+}
 
 function SelectPath(props) {
-  const {setStory, available, setAvailable, setCurrentFile_, selectedStory, setSelectedStory} = props;
+  const {story, setStory, available, setAvailable, setCurrentFile_, selectedStory, setSelectedStory} = props;
   console.log(available)
 
   const [isLoading, setIsLoading] = useState(false);
@@ -60,7 +65,40 @@ function SelectPath(props) {
         }
     }
     if(available.length === 0) fetchAvailable();
-  } , [available]);
+    let filename = selectedStory.replace("data/", "").replace("/medias.json", "");
+    document.getElementById("filename").value = filename;
+  } , [available, selectedStory, setAvailable, setSelectedStory]);
+
+  const saveAs = async () => {
+    
+    const filename = "data/" + document.getElementById("filename")?.value + "/medias.json";
+    console.log(filename);
+    let requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...story, path: filename }, null, 4)
+    };
+    let response = await fetch('http://localhost:8726/save', requestOptions);
+    let result = await response.json();
+    setSelectedStory(filename);
+    setStory(result);
+    // available
+    requestOptions = {
+      method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+    };
+    response = await fetch('http://localhost:8726/available', requestOptions);
+
+    if (!response.ok) {
+        throw new Error(`Error! status: ${response.status}`);
+    }
+
+    result = await response.json();
+
+    console.log('result is: ', JSON.stringify(result, null, 4));
+
+    setAvailable(result);
+  }
 
 
   return (
@@ -72,6 +110,8 @@ function SelectPath(props) {
             }}>{file.split("data/")[1].split(".")[0]}</Button>
         )
     }
+    Save as: <input id="filename" type="text" />
+    <Button onClick={saveAs}>Save</Button>
     </form>
   )
 }
