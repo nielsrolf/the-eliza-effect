@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import {useState, useEffect} from 'react';
+import Chapters from './Chapters';
 
 async function wait(ms) {
   return new Promise(resolve => {
@@ -8,7 +9,7 @@ async function wait(ms) {
 }
 
 function SelectPath(props) {
-  const {story, setStory, available, setAvailable, setCurrentFile_, selectedStory, setSelectedStory} = props;
+  const {story, setStory, available, setAvailable, currentFile_, setCurrentFile_, selectedStory, setSelectedStory} = props;
   console.log(available)
 
   const [isLoading, setIsLoading] = useState(false);
@@ -102,17 +103,20 @@ function SelectPath(props) {
 
 
   return (
-    <form>
-      {
-        available.map((file) =>
-            <Button value={file} onClick={setSelectedPath} key={file} style={{
-              "backgroundColor":  file === selectedStory ? "rgb(120, 120, 120)" : "rgb(60, 60, 60)",
-            }}>{file.split("data/")[1].split(".")[0]}</Button>
-        )
-    }
-    Save as: <input id="filename" type="text" />
-    <Button onClick={saveAs}>Save</Button>
-    </form>
+    <div>
+      <form>
+        {
+          available.map((file) =>
+              <Button value={file} onClick={setSelectedPath} key={file} style={{
+                "backgroundColor":  file === selectedStory ? "rgb(120, 120, 120)" : "rgb(60, 60, 60)",
+              }}>{file.split("data/")[1].split(".")[0]}</Button>
+          )
+      }
+      Save as: <input id="filename" type="text" />
+      <Button onClick={saveAs}>Save</Button>
+      </form>
+      <Chapters story={story} currentFile={currentFile_} setCurrentFile={setCurrentFile_} />
+    </div>
   )
 }
 

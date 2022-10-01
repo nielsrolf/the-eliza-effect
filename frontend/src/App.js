@@ -23,7 +23,7 @@ function App() {
   const [selectedStory, setSelectedStory] = useState('');
 
   return (<>
-    <SelectPath story={story} setStory={setStory} available={available} setAvailable={setAvailable} setCurrentFile_={setCurrentFile_} selectedStory={selectedStory} setSelectedStory={setSelectedStory}/>
+    <SelectPath story={story} setStory={setStory} available={available} setAvailable={setAvailable} currentFile_={currentFile_} setCurrentFile_={setCurrentFile_} selectedStory={selectedStory} setSelectedStory={setSelectedStory}/>
     {/* <SelectStory setStory={setStory} story={story}/> */}
     <AudioScreen story={story} setStory={setStory} midiOutput={MidiDevice.midiOutput} currentFile_={currentFile_} setCurrentFile_={setCurrentFile_} setSelectedStory={setSelectedStory}/>
     {/* <TextVersion story={story} /> */}
