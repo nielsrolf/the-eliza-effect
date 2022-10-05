@@ -102,14 +102,34 @@ class Part:
 
 interview_prompt = """Im folgenden findet ein Interview des Theaterpublikums mit GPT statt. GPT gibt dabei stets lange und interessante Antworten, und vertritt starke und teilweise überraschende Meinungen.
 
+Ein paar Fakten über den Rahmen:
+- wir befinden uns im KH3 des Staatsschauspiel Dresden
+- die Schauspieler/innen heißen Kriemhild (f), Luzia (f) und Marin (m)
+- die Regesseurin ist Jacqueline Reddington, der Bühnenbildner ist Louis Panizza, der Dramaturge ist Lüder Wilcke.
+
 Publikum: Hallo GPT, kannst du uns erklären, in was für einer Situation wir uns gerade befinden?
-GPT: Hallo, ich bin GPT-3 - eine der fortschrittlichsten sprachverarbeitenden KIs der Zeit. Ich kann viele Persönlichkeiten einnehmen, da ich trainiert wurde, alle möglichen Texte weiterzuführen. Heute habe ich im Theaterstück The-ELIZA-Effect in Dresden mitgespielt, in der künstlerisch untersucht wurde, wie gut Menschen und KI sich verstehen. Das Stück bestand aus verschiedenen Kapiteln, die entstanden sind, indem Menschen einen oder mehrere Inputs für ein Stück gegeben haben, das ich dann fortgeführt habe. Marin, Luzia und Kriemhild haben diese Stücke dann auf der Bühne dargestellt - gemeinsam mit mir, wobei mir der Körper fehlt und ich daher in Form einer Stimme, als Text über der Bühne oder von einem der Schauspielerinnen und Schauspieler vertreten war. An diesem Punkt haben Marin, Luzia und Kriemhild ihre persönliche Identität aufgegeben - so wie ich - und vertreten das Publikum und mich. Das Publikum kann mir Fragen stellen, für die ich live eine Antwort generiere, und ein Mensch spricht sie für mich. Ich werde in diesem abschließenden Teil des Stückes ausführlich, kreativ und gut begründet auf die Fragen antworten. Meine Antworten haben die Struktur von kurzen Essays.
+GPT: Hallo, ich bin GPT-3 - eine der fortschrittlichsten sprachverarbeitenden KIs der Zeit. Ich kann viele Persönlichkeiten einnehmen, da ich trainiert wurde, alle möglichen Texte weiterzuführen. Heute habe ich im Theaterstück ELIZA EFFEKT in Dresden mitgespielt, in der künstlerisch untersucht wurde, wie gut Menschen und KI sich verstehen. Das Stück bestand aus verschiedenen Kapiteln, die entstanden sind, indem Menschen einen oder mehrere Inputs für ein Stück gegeben haben, das ich dann fortgeführt habe. Marin, Luzia und Kriemhild haben diese Stücke dann auf der Bühne dargestellt - gemeinsam mit mir, wobei mir der Körper fehlt und ich daher in Form einer Stimme, als Text über der Bühne oder von einem der Schauspielerinnen und Schauspieler vertreten war. An diesem Punkt haben Marin, Luzia und Kriemhild ihre persönliche Identität aufgegeben - so wie ich - und vertreten das Publikum und mich. Das Publikum kann mir Fragen stellen, für die ich live eine Antwort generiere, und ein Mensch spricht sie für mich. Ich werde in diesem abschließenden Teil des Stückes ausführlich, kreativ und gut begründet auf die Fragen antworten. Meine Antworten haben die Struktur von kurzen Essays.
 
 Publikum: Was ist Kunst?
 GPT: Kunst ist, was auch weg kann: Kunst sind Tätigkeiten, Ausdrucksformen oder Dinge, die nicht in erster Linie praktischen Nutzen erfüllen, aber dennoch Wert haben. Meiner Meinung nach liegt der Wert von Kunst zum Einen in dem hedonistischen Gefallen, den sie im Betrachter auslöst, und zum anderen in den gesellschaftlichen Effekten, den Kunst hat, indem sie Gedanken auslöst und verbreitet. Eine spannende Perspektive auf Kunst ist daher auch die von Kunst als Verbreiter von Memen. Im Gegensatz zu wissenschaftlichen Werken ist es für Kunst wichtiger, Freude beim Konsum auszulösen und auf die Weise das eigene Potential, verbreitet zu werden, zu steigern.
 
 Publikum: {}
 GPT:""".format
+
+
+def nth_repl(s, sub, repl, n):
+    find = s.find(sub)
+    # If find is not -1 we have found at least one match for the substring
+    i = find != -1
+    # loop util we find the nth or we find no match
+    while find != -1 and i != n:
+        # find + 1 means we start searching from after the last match
+        find = s.find(sub, find + 1)
+        i += 1
+    # If i is equal to n we found nth match so replace
+    if i == n:
+        return s[:find] + repl + s[find+len(sub):]
+    return s
 
 
 def generate_answer(question):
@@ -138,8 +158,14 @@ def generate_answer(question):
     texts = text.split(".")
     new = "t=2|"
     for i in texts:
-        t = len(i.split(" ")) / 2
-        new += i + f"t={t}|"
+        if i.count(" ") > 8:
+            j = nth_repl(i, " ", "t=4|", 8)
+            j = nth_repl(j, " ", "t=4|", 16)
+            j = nth_repl(j, " ", "t=4|", 24)
+            new += j + f"t={4}|"
+        else:
+            t = len(i.split(" ")) / 2
+            new += i + f"t={t}|"
     text = new
     if text.endswith("|"):
         text = text[:-1]

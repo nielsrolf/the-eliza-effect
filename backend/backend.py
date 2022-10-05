@@ -1,6 +1,6 @@
 from imp import reload
 import os
-
+import time
 import openai
 import uvicorn
 from dotenv import load_dotenv
@@ -199,6 +199,9 @@ def answer_audience_questions(story_de, answerIdx):
             answer_txt, answer_audio = generate_answer(convo_text)
             story_de.insert(i + 1, answer_txt)
             story_de.insert(i + 2, answer_audio)
+            return story_de
+        if part.actor.lower() == "audience" and part.text != "" and part.text is not None and (i + 1 < len(story_de) and story_de[i+1].actor == "GPT") and i == answerIdx:
+            time.sleep(2)
             return story_de
         if part.media != "typing":
             convo.append(part)
